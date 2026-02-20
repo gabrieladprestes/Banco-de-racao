@@ -1,0 +1,331 @@
+/* ==========================================================
+   RESET E CONFIGURAÇÕES GERAIS
+   ========================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background: #f4f7f8;
+    color: #333;
+    font-size: 15px;
+}
+
+
+
+/* ==========================================================
+   SIDEBAR (MENU LATERAL)
+   ========================================================== */
+
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #348888;
+    color: white;
+    padding: 20px;
+    overflow-y: auto;
+    transition: .3s;
+}
+
+.sidebar-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-header .logo {
+    width: 70px;
+    margin-bottom: 10px;
+}
+
+/* Botão principal */
+.menu-btn {
+    width: 100%;
+    padding: 12px 14px;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    border-radius: 6px;
+    text-align: left;
+    cursor: pointer;
+    margin-bottom: 6px;
+    font-size: .95rem;
+    transition: .2s;
+}
+
+.menu-btn:hover {
+    background: #FA7F08;
+}
+
+/* Itens internos */
+.submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
+    padding-left: 10px;
+}
+
+.submenu a {
+    display: block;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    margin: 4px 0;
+    color: white;
+    text-decoration: none;
+    font-size: .9rem;
+}
+
+.submenu a:hover {
+    background: #FA7F08;
+}
+
+
+
+/* ==========================================================
+   TOPO (TOPBAR)
+   ========================================================== */
+
+.topbar {
+    height: 70px;
+    margin-left: 260px;
+    background: white;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 0 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toggle-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 26px;
+}
+
+
+
+/* ==========================================================
+   ÁREA DE CONTEÚDO
+   ========================================================== */
+
+.content {
+    margin-left: 260px;
+    padding: 30px;
+}
+
+.footer {
+    margin-left: 260px;
+    padding: 20px;
+    text-align: center;
+    color: #555;
+}
+
+
+
+/* ==========================================================
+   FORMULÁRIOS — SIMPLES E PADRONIZADOS
+   ========================================================== */
+
+.simple-form {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 1000px;
+    margin: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.simple-form h2 {
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+/* Layout 2 colunas */
+.two-columns form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-col {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Campos */
+.simple-form label {
+    font-weight: 600;
+    margin-top: 10px;
+    font-size: .85rem;
+}
+
+.simple-form input,
+.simple-form select,
+.simple-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: .9rem;
+}
+
+.simple-form input:focus,
+.simple-form select:focus {
+    border-color: #22BABB;
+}
+
+
+
+/* ==========================================================
+   BOTÕES
+   ========================================================== */
+
+.btn-simple {
+    background: #FA7F08;
+    border: none;
+    padding: 10px 18px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.btn-simple:hover {
+    background: #d96b05;
+}
+
+.btn-cancelar {
+    background: #F24405;
+}
+
+.btn-cancelar:hover {
+    background: #c73203;
+}
+
+.full {
+    width: 100%;
+    text-align: center;
+}
+
+
+
+/* ==========================================================
+   RADIO (TIPO DE PESSOA)
+   ========================================================== */
+
+.radio-group {
+    display: flex;
+    gap: 25px;
+    margin: 10px 0 15px 0;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+
+
+/* ==========================================================
+   CHECKBOX
+   ========================================================== */
+
+.simple-form input[type="checkbox"] {
+    width: auto !important;
+    height: auto !important;
+    accent-color: #FA7F08;
+}
+
+
+
+/* ==========================================================
+   RESPONSIVIDADE
+   ========================================================== */
+
+@media (max-width: 768px) {
+    .sidebar {
+        left: -260px;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .topbar,
+    .content,
+    .footer {
+        margin-left: 0;
+    }
+
+    .toggle-btn {
+        display: block;
+    }
+}
+
+@media (max-width: 700px) {
+    .form-col {
+        min-width: 100%;
+    }
+}
+
+/* ==========================================================
+   CARDS DE ACESSO RÁPIDO
+   ========================================================== */
+
+.menu-card {
+    background: white;
+    border-radius: 14px;
+    padding: 25px 20px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    color: #333;
+    border: 2px solid #e6e6e6;
+    transition: .25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.menu-card:hover {
+    transform: translateY(-6px);
+    border-color: #F24405;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.menu-icon {
+    font-size: 2.7rem;
+    margin-bottom: 12px;
+}
+
+.menu-card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.seta-voltar-index{
+    font-size: 1.1rem;
+    text-decoration: none;
+    font-weight: 600;
+    color: #348888;
+    display: inline-block;
+    margin-bottom: 18px;
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Painel Admin - Banco de Ração</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styleADM.css">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+            <img src="img/logo_Bem-EstarAnimal.png" class="logo">
+            <img src="img/logo_prefeituraVotorantim.png" class="logo">
+            <h2>Banco de Ração</h2>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <!-- MENU 1 - CONTROLE DE ESTOQUE -->
+            <div class="menu-item">
+                <button class="menu-btn">📦 Controle de Estoque</button>
+                <div class="submenu">
+                    <a href="#">📊 Consulta de Estoque</a>
+                    <a href="#">➕ Recebimento de Mercadoria</a>
+                    <a href="#">📝 Relatórios de Estoque</a>
+                    <a href="#">📁 Cadastro de Produtos</a>
+                </div>
+            </div>
+
+            <!-- MENU 2 - DONATÁRIOS -->
+            <div class="menu-item">
+                <button class="menu-btn">🎯 Donatários</button>
+                <div class="submenu">
+                    <a href="cadastro_donatario.html">👤 Cadastro de Donatário</a>
+                    <a href="#">📋 Consulta de Donatários</a>
+                </div>
+            </div>
+
+            <!-- MENU 3 - DOADORES -->
+            <div class="menu-item">
+                <button class="menu-btn">❤️ Doadores</button>
+                <div class="submenu">
+                    <a href="#">➕ Cadastro de Doador</a>
+                    <a href="#">📄 Lista de Doadores</a>
+                    <a href="#">📦 Histórico de Doações</a>
+                </div>
+            </div>
+
+            <!-- MENU 4 - AGENDAMENTOS -->
+            <div class="menu-item">
+                <button class="menu-btn">📅 Agendamentos</button>
+                <div class="submenu">
+                    <a href="consulta_agendamento.html">📆 Agendamentos de Retirada</a>
+                    <a href="#">👥 Gerenciar Agendados</a>
+                    <a href="#">📜 Histórico de Retiradas</a>
+                </div>
+            </div>
+
+        </nav>
+
+    </aside>
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="d-flex align-items-center gap-3">
+            <button id="btnToggle" class="toggle-btn">☰</button>
+            <h1 class="m-0">Cadastro de Usuário</h1>
+        </div>
+
+        <div class="d-flex align-items-center gap-3">
+            <span class="text-muted small">Olá, Administrador</span>
+            <button class="btn btn-outline-secondary btn-sm">Sair</button>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO CENTRAL DA PAGINA, PENSEI EM COLOCAR A LOGO MEIO OPACA NO CENTRO -->
+    <div class="content">
+
+        <div class="simple-form two-columns">
+
+            <div class="simple-form two-columns">
+
+                <h2>Cadastro de Usuário - Doador</h2>
+
+                <a href="dashboardADM.html" class="seta-voltar-index">
+                    ⬅ Voltar
+                </a>
+
+
+                <form>
+
+                    <!-- COLUNA ESQUERDA -->
+                    <div class="form-col">
+
+                        <!-- ESSE CÓDIGO SERÁ DEFINIDO DE FORMA AUTOMATICA -->
+                        <label>Código</label>
+                        <input readonly type="text" style="background-color: #d3d3d3">
+
+                        <!-- OPÇÃO PESSOA FÍSICA OU JURÍDICA -->
+                        <label class="mt-2">Tipo de Pessoa</label>
+
+                        <div class="radio-group">
+
+                            <label class="radio-option">
+                                <input type="radio" name="tipoPessoa" value="F" checked>
+                                Física
+                            </label>
+
+                            <label class="radio-option">
+                                <input type="radio" name="tipoPessoa" value="J">
+                                Jurídica
+                            </label>
+
+                        </div>
+
+                        <label>CNPJ / CPF *</label>
+                        <input type="text" required>
+
+                        <label>Razão Social</label>
+                        <input type="text">
+
+                        <label>Nome Fantasia</label>
+                        <input type="text">
+
+                        <label>Tipo</label>
+                        <input type="text">
+
+                        <label>Inscrição Estadual</label>
+                        <input type="text">
+
+                        <label>Inscrição Municipal</label>
+                        <input type="text">
+
+                        <label>RG (somente pessoa física)</label>
+                        <input type="text">
+
+                        <label>CEP</label>
+                        <input type="text">
+
+                        <label>Rua</label>
+                        <input type="text">
+
+                        <label>Número</label>
+                        <input type="text">
+
+                        <label>Bairro</label>
+                        <input type="text">
+
+                    </div>
+
+                    <!-- COLUNA DIREITA -->
+                    <div class="form-col">
+
+                        <label>Complemento</label>
+                        <input type="text">
+
+                        <label>Cidade</label>
+                        <input type="text">
+
+                        <label>UF</label>
+                        <input type="text" maxlength="2">
+
+                        <label>País</label>
+                        <input type="text">
+
+                        <label>Telefone</label>
+                        <input type="text">
+
+                        <label>Telefone (2)</label>
+                        <input type="text">
+
+                        <label>Celular</label>
+                        <input type="text">
+
+                        <label>Contato</label>
+                        <input type="text">
+
+                        <label>E-mail</label>
+                        <input type="email">
+
+                        <label>Site</label>
+                        <input type="text">
+
+                        <label>Observações</label>
+                        <input type="text">
+
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" id="ativo" checked>
+                            <label class="form-check-label" for="ativo">
+                                Ativo
+                            </label>
+                        </div>
+
+
+                    </div>
+
+                    <!-- BOTÕES -->
+                    <div class="full">
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                        <button type="submit" class="btn btn-warning">Limpar</button>
+                        <button type="submit" class="btn btn-danger">Cancelar</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <footer class="footer">
+        Banco de Ração — Prefeitura de Votorantim
+    </footer>
+
+    <script src="js/admin.js"></script>
+</body>
+
+</html>

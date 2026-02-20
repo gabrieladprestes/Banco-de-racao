@@ -1,0 +1,178 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f8f8;
+}
+
+.pa1{
+color: #2b8a8a;
+display: flex;
+justify-content: center;
+}
+
+
+.ftpet {
+display: inline;
+border: 3px solid #2b8a8a;
+padding: 50px 20px;
+border-style:dotted;
+border-radius: 5px;
+margin-left: 40px;
+background-color: rgb(235, 235, 235);
+}
+
+.conteiner {
+    margin: auto;
+    margin-top: 70px;
+    margin-bottom: 46px;
+border: 3px solid black;
+width: 40%;
+height: 21cm;
+border-radius: 10px;
+}
+
+.meuform {
+    display: flex;
+    flex-direction: column;
+    height: 2cm;
+    width: 5cm;
+}
+
+
+.infpet {
+    display: flex;
+    align-items: left;   /* alinha na mesma altura */
+    gap: 40px;             /* espaço entre foto e form */
+    margin-top: 5px;
+}
+
+/*radio check*/
+
+.grupo {
+  display: flex;
+  gap: 40px; /* espaço entre os grupos */
+  flex-wrap: wrap; /* quebra linha se faltar espaço */
+  
+}
+
+.grupo {
+  display: flex;
+  flex-direction:row;
+}
+
+.titulo {
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.radio {
+  display: flex;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
+
+.radio input {
+  display: none;
+}
+
+.bolinha {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  border: 2px solid #888;
+  margin-right: 6px;
+  transition: 0.2s;
+}
+
+.radio input:checked + .bolinha {
+  background-color: #ff4d00;
+  border-color: #ff4d00;
+}
+
+.microchip-input {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border: 2px solid #8ab;
+  border-radius: 4px;
+  width: 150px;
+}
+.todas{
+  display: inline-flex;
+}
+.todas {
+  margin-left: 50px;
+  gap: 10px;
+}
+
+.adPet {
+display: inline-flex;
+border: 3px solid #2b8a8a;
+padding: 50px 20px;
+margin: auto;
+margin-left: 30px;
+margin-bottom: 30px;
+background-color: rgb(235, 235, 235);
+height: 20px;
+}
+
+.adPet p {
+width: 40px;
+
+}
+
+p {
+color: #ff4d00;
+font-size: 30px;
+align-self: center;
+text-align: center;
+}
+
+/*animação box adPet*/
+.adPet:hover {
+transform: translateY(-15px);
+transition: 0.5s;
+}
+
+.ftpet:hover {
+transform: translateY(-7px);
+transition: 0.3s;
+}
+
+
+#submit {
+ width: 240px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #F24405;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: 50%;
+}
+
+#submit:hover {
+transform: translateY(-7px);
+transition: 0.3s;
+}
+
+ #nomepet {
+color: #2b8a8a;
+
+ }
+
+ input, select {
+    margin-top: 6px;
+    padding: 10px;
+    border: 1px solid #2b8a8a;
+    border-radius: 6px;
+}
+
+.flex-column p{
+  align-self: flex-start;
+}
+
+.justify-content-between p{
+  color: #fff;
+  font-size: 18px;
+}

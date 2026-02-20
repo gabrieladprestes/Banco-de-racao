@@ -1,0 +1,90 @@
+
+body{
+text-align: left;
+
+}
+main{
+  padding: 20px
+}
+
+.carrossel {
+  display: flex;    /*display flex é necessario para usar align e justify*/
+  align-items: center;
+  justify-content: center;
+  background-color: #2b8a8a;
+  padding: 40px;
+  border-radius: 10px;
+  width: 90%;
+  margin: 20px auto;
+  position: relative;
+}
+
+.imgs {
+  display: flex;
+  overflow: hidden;  /*controla o que acontece com o conte que “sai” da caixa (que ultrapassa o tamanho definido do elemen)*/
+  gap: 15px;
+}
+.imgs:hover{
+  overflow: visible;
+}
+
+.img {
+  background-color:#FA7F08;
+  padding: 20px; 
+  border-radius: 10px;
+  margin-right: 50px;
+  width: 150px;
+  flex-shrink: 0;     /*define se um item dentro de um display, flex pode encolher quando o espaço é pequeno*/
+  transition: 0.5s;
+}
+.img:hover{
+  transform: scale(1.1,1.1);
+}
+
+.img p {
+  color: white;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.button {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 30px;       /*define o espaçamento entre os itens de um container (usado em display flex ou grid)*/
+
+}
+
+div img {
+  border-radius: 10px;
+}
+
+.botao {
+  width: 240px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #F24405;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button:hover {            /*firula de mudar cor do botão ao passar cursor por cima*/
+background-color: #d33800;
+
+}
+
+#titulo {
+font-family: 'Outfit' ,'Courier New', Courier, monospace;
+color: #2b8a8a;
+}
+
+p {
+font-family: 'Outfit' ,'Courier New', Courier, monospace;
+
+}
+
+

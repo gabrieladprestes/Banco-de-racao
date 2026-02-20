@@ -1,0 +1,85 @@
+.coisa {
+    padding: 25px;
+    border-radius: 8px;
+    width: 600px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #2b8a8a;
+    margin: auto;
+    margin-top: 50px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+
+}
+.coisa {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    flex-wrap: wrap;
+
+}
+
+.aviso {
+    background: #ffe1e1;
+    border-left: 5px solid #FA7F08;
+    padding: 15px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 6px;
+  color: #F24405;
+ 
+}
+
+label {
+font-size: larger;
+color: #2b8a8a;
+}
+
+#produto {
+width: 300px;
+border: 2px solid #2b8a8a;
+border-radius: 5px;
+height: 35px;
+
+}
+
+#porte {
+width: 300px;
+border: 2px solid #2b8a8a;
+border-radius: 5px;
+height: 35px;
+
+}
+
+.agendamento {
+  width: 300px;
+  height: 35px;
+border: 2px solid #2b8a8a;
+border-radius: 5px;
+
+}
+
+.btn-agendar {
+background-color: #FA7F08;
+border: none;
+width: 300px;
+height: 40px;
+border-radius: 5px;
+font-size: medium;
+color: white;
+margin: auto;
+}
+
+.container-agendamento {
+border: 3px solid rgb(0, 0, 0);
+border-radius: 10px;
+margin: auto;
+margin-bottom: 48px;
+width: 800px;
+height: 700px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+}
