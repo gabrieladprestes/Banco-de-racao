@@ -1,0 +1,240 @@
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 0;
+}
+
+.tab {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color .2s, border-color .2s;
+}
+
+.tab:hover {
+    color: #348888;
+}
+
+.tabAtivo {
+    color: #348888;
+    border-bottom-color: #348888;
+}
+
+/* Filtros */
+.filtros {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.filtros label {
+    display: block;
+    font-size: 0.82rem;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.filtros input {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    min-width: 150px;
+}
+
+.btnBuscar {
+    background: #FA7F08;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: .2s;
+}
+
+.btnBuscar:hover { background: #d96b05; }
+
+/* Tabela */
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.tabela thead {
+    background: #348888;
+    color: white;
+}
+
+.tabela th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.tabela td {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.tabela tbody tr:hover {
+    background: #f9fafb;
+}
+
+.tdItens {
+    max-width: 260px;
+    white-space: normal;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.btnVer {
+    background: #e6f4f4;
+    color: #348888;
+    border: 1px solid #b2d8d8;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: .2s;
+    white-space: nowrap;
+}
+
+.btnVer:hover {
+    background: #348888;
+    color: white;
+}
+
+/* Modal */
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal {
+    background: white;
+    border-radius: 12px;
+    width: 620px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.modalHeader h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.modalCodigo {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #348888;
+    background: #e6f4f4;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+}
+
+.btnFechar {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #666;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background .2s;
+}
+
+.btnFechar:hover { background: #f0f0f0; }
+
+.modalBody {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modalInfo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.88rem;
+    color: #444;
+    background: #f8fafb;
+    padding: 12px 16px;
+    border-radius: 8px;
+}
+
+.tabelaDetalhe {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.tabelaDetalhe thead {
+    background: #f4f7f8;
+}
+
+.tabelaDetalhe th {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 0.8rem;
+    color: #555;
+    font-weight: 600;
+}
+
+.tabelaDetalhe td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.codPill {
+    background: #e6f4f4;
+    color: #348888;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+}

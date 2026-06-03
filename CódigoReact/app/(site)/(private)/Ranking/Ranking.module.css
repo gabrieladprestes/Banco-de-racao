@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+/* Variáveis de Cores */
+:root {
+    --cor-verde-agua: #348888;
+    --cor-verde-agua-claro: #d5f1ef;
+    --cor-laranja: #FA7F08;
+    --cor-escuro: #2d2d2d;
+    --cor-cinza: #707070;
+    --cor-branco: #ffffff;
+    --cor-vermelho: #F24405;
+    --cor-verde-petroleo: #348888; 
+    --cor-ciano-medio: #22BABB; 
+    --cor-ciano-claro:#9EF8EE; 
+    --cor-laranja-vibrante: lab(66.55% 40.45 72.21); 
+    --cor-laranja-avermelhado: #f24405;        
+    --bnt-laranja-vibrante-80: lab(66.55% 40.45 72.21 / 0.80); 
+}
+
+.img_rank{
+    width: 50%;
+    transition: 0.8s;
+}
+.sec_rank{
+    justify-self: center;
+    padding: 2%;
+    display: flex;
+}
+.sec_rank ul li{
+    list-style-type: none;
+    text-align: left;
+    color: #000;
+    font-size: 20px;
+}
+.sec_rank h5{
+    margin-left: -100px;
+    margin-bottom: 50px;
+    font-size: 25px;
+    color: var(--cor-laranja);
+}
+.bloco_rank, .bloco_stat{
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 4%;
+    margin: 3%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px #00000026;
+    font-family: "Outfit", sans-serif;
+}
+
+.art_rank{
+    width: 30%;
+    margin-top: 30px;
+    transition: 0.8s;
+    border-radius: 5px;
+    border: 2px solid #000;
+}
+.bloco_rank p{
+    background-color: #000000;
+    padding: 10px;
+    border-radius: 20px;
+    color: #9EF8EE;
+    font-size: 20px;
+    padding-inline: 20px;
+    transition: 0.8s;
+}
+.bloco_rank h3{
+    font-size: 1.5rem;
+}
+.bloco_rank{
+    background-color: #9EF8EE;
+}
+.bloco_stat{
+    background-color: #FFFFFF;
+}
+.img_rank:hover{
+    transform: scale(1.1,1.1);
+}
+.bloco_rank p:hover{
+    transform: scale(1.1,1.1);
+}
+.art_rank:hover{
+    transform: scale(1.1,1.1);
+}

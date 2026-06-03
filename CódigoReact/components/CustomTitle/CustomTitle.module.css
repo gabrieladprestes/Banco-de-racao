@@ -1,0 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+.custom_title{
+    font-family: "Outfit", sans-serif;
+    font-size: 52px;
+    font-weight: 600;
+    color: #2b8a8a;
+    margin-bottom: 12px;
+}

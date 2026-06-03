@@ -1,0 +1,186 @@
+.buscaBar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.buscaBar input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.btnBuscar {
+    background: #FA7F08;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: .2s;
+}
+
+.btnBuscar:hover {
+    background: #d96b05;
+}
+
+/* Tabela de lista */
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.tabela thead {
+    background: #348888;
+    color: white;
+}
+
+.tabela th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.tabela td {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.tabela tbody tr {
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.tabela tbody tr:hover {
+    background: #f0f9f9;
+}
+
+/* Modal */
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    background: white;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    overflow: hidden;
+}
+
+.modalHeader {
+    background: #348888;
+    color: white;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalHeader h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.btnFechar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+}
+
+.modalBody {
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+.campo {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.campo span:first-child {
+    color: #777;
+    font-weight: 500;
+}
+
+.campo span:last-child {
+    color: #333;
+    font-weight: 600;
+    text-align: right;
+}
+
+.petsSection h4 {
+    font-size: 0.88rem;
+    color: #348888;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.petChips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.petChip {
+    background: #e0f0f0;
+    color: #348888;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 0.82rem;
+    font-weight: 500;
+}
+
+.modalFooter {
+    padding: 16px 20px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btnFecharFooter {
+    background: #e0e0e0;
+    color: #333;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.btnFecharFooter:hover { background: #c8c8c8; }
+
+.semResultados {
+    text-align: center;
+    color: #999;
+}

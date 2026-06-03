@@ -1,0 +1,49 @@
+.radio_title {
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-family: "Outfit", sans-serif;
+  color: #212529;
+}
+
+.radio_label {
+  display: flex;
+  margin-bottom: 4px;
+  cursor: pointer;
+  font-family: "Outfit", sans-serif;
+}
+
+.radio_label input {
+  display: none;
+}
+
+.styled_radio {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  border: 2px solid #888;
+  margin-right: 6px;
+  transition: 0.2s;
+}
+
+.radio_label input:checked + .styled_radio {
+  background-color: #ff4d00;
+  border-color: #ff4d00;
+}
+
+.text_input {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border: 2px solid #2b8a8a;
+  border-radius: 4px;
+  width: 150px;
+}
+
+.disabled_text_input {
+  margin-top: 6px;
+  padding: 6px 10px;
+  border: 2px solid #8ab;
+  border-radius: 4px;
+  width: 150px;
+}
+
+/* #8ab */

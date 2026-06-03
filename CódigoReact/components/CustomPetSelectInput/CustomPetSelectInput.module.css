@@ -1,0 +1,13 @@
+.label{
+    color: #2b8a8a;
+    font-family: "Outfit", sans-serif;
+}
+
+.input{
+    margin-top: 6px;
+    padding: 10px;
+    border: 1px solid #2b8a8a;
+    border-radius: 6px;
+    font-family: "Outfit", sans-serif;
+    margin-bottom: 1rem;
+}

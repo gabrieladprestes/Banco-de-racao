@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+.button {
+    margin-top: 20px;
+    padding: 12px;
+    background: #FA7F08;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-family: "Outfit", sans-serif;
+}
+
+.button:hover {
+    background: rgb(225, 117, 9);
+}

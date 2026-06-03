@@ -1,0 +1,12 @@
+.custom_container{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+.custom_title{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    color: #2b8a8a;
+}

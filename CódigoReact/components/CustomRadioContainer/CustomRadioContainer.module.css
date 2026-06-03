@@ -1,0 +1,6 @@
+.radio_container {
+    display: flex;
+    margin-left: 50px;
+    gap: 10px;
+    margin-bottom: 2rem;
+}

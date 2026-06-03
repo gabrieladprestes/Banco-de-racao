@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+.image_container{
+    background-color:#fff;
+    padding: 20px; 
+    border-radius: 10px;
+    width: 150px;
+    height: 150px;
+    flex-shrink: 0;
+    transition: 0.5s;
+}
+
+.image_container:hover{
+    transform: scale(1.1,1.1);
+}
+
+.image{
+    border-radius: 10px;
+    height: 70%;
+    width: 100%;
+    object-fit: fill;
+}
+
+.title{
+    color: #000;
+    margin-top: 5px;
+    text-align: center;
+    font-family: "Outfit", sans-serif;
+}
+
+.linkcard{
+    text-decoration: none;
+}

@@ -1,0 +1,28 @@
+.menuCard {
+    background: white;
+    border-radius: 14px;
+    padding: 25px 20px;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    color: #333;
+    border: 2px solid #e6e6e6;
+    transition: .25s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.menuCard:hover {
+    transform: translateY(-6px);
+    border-color: #F24405;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.menuIcon {
+    font-size: 2.7rem;
+    margin-bottom: 12px;
+}
+
+.menuCard h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+}

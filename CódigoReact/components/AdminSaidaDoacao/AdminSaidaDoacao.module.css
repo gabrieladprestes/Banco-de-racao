@@ -1,0 +1,263 @@
+.filtros {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.filtros label {
+    display: block;
+    font-size: 0.82rem;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.filtros input {
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    min-width: 160px;
+}
+
+.btnBuscar {
+    background: #FA7F08;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: .2s;
+}
+
+.btnBuscar:hover {
+    background: #d96b05;
+}
+
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.tabela thead {
+    background: #348888;
+    color: white;
+}
+
+.tabela th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.tabela td {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.tabela tbody tr {
+    cursor: pointer;
+}
+
+.tabela tbody tr:hover {
+    background: #f0f9f9;
+}
+
+/* Modal */
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal {
+    background: white;
+    border-radius: 12px;
+    width: 560px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.modalHeader h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.btnFechar {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    color: #666;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background .2s;
+}
+
+.btnFechar:hover {
+    background: #f0f0f0;
+}
+
+.modalBody {
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.campo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f5f5f5;
+    padding-bottom: 8px;
+}
+
+.campo span:first-child {
+    color: #777;
+    font-weight: 500;
+}
+
+.campo span:last-child {
+    color: #222;
+    font-weight: 600;
+}
+
+.itensLabel {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #348888;
+    margin: 4px 0 0;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+
+.tabelaItens {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.tabelaItens th {
+    background: #f4f7f8;
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.tabelaItens td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.inputQtd {
+    width: 70px;
+    padding: 5px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.88rem;
+    text-align: center;
+}
+
+.obsLabel {
+    font-size: 0.82rem;
+    color: #555;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.obsTextarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 24px;
+    border-top: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+}
+
+.btnFecharFooter {
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: .2s;
+}
+
+.btnFecharFooter:hover {
+    background: #ddd;
+}
+
+.btnCancelar {
+    background: #F24405;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: .2s;
+}
+
+.btnCancelar:hover {
+    background: #c73203;
+}
+
+.btnConfirmar {
+    background: #FA7F08;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: .2s;
+}
+
+.btnConfirmar:hover {
+    background: #d96b05;
+}

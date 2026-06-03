@@ -1,0 +1,73 @@
+.filter_btn_container {
+    display: flex;
+    justify-content: end;
+}
+
+.filter_btn {
+    border: none;
+    background: none;
+    margin-right: 18px;
+}
+
+.filter_btn span {
+    font-size: 32px;
+    color: #348888;
+}
+
+.borrao {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+}
+
+.container_filtro {
+    background-color: #fff;
+    width: 40vw;
+    height: auto;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.campos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.side_fields {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 16px;
+}
+
+.side_fields input, .side_fields select {
+    width: 70%;
+    border: solid 2px #348888;
+    border-radius: 4px;
+    padding: 6px;
+    background-color: #f7f5f5;
+}
+
+.btn_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 18px;
+}
+
+.aplicar_btn {
+    font-size: 18px;
+    background-color: #FA7F08;
+    padding: 4px 18px;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+}

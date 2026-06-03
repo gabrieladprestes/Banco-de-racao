@@ -1,0 +1,37 @@
+.simpleForm {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.simpleForm h2 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+}
+
+.simpleForm input,
+.simpleForm select,
+.simpleForm textarea {
+    display: block;
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.simpleForm label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    color: #555;
+}
+
+.simpleForm button {
+    width: 100%;
+    margin-top: 8px;
+}

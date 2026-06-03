@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+.button{
+    width: 240px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #FA7F08;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    font-family: "Outfit", sans-serif;
+    filter: drop-shadow( 3px 3px 3px rgba(0, 0, 0, 0.618));    
+    text-decoration: none;
+}
+
+.button:hover{
+    background-color: #de7309;
+}

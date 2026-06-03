@@ -1,0 +1,164 @@
+.layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.cardTitulo {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #348888;
+    margin-bottom: 20px;
+    border-left: 3px solid #348888;
+    padding-left: 10px;
+}
+
+/* Formulário */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.row2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.campo label {
+    display: block;
+    font-size: 0.82rem;
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.campo input,
+.campo select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: border-color .2s;
+    box-sizing: border-box;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: #348888;
+    box-shadow: 0 0 0 3px rgba(52,136,136,0.12);
+}
+
+.textarea {
+    width: 100%;
+    min-height: 76px;
+    padding: 9px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    resize: vertical;
+    font-family: inherit;
+    transition: border-color .2s;
+    box-sizing: border-box;
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: #348888;
+    box-shadow: 0 0 0 3px rgba(52,136,136,0.12);
+}
+
+.btnSalvar {
+    background: #FA7F08;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s;
+    width: 100%;
+    margin-top: 4px;
+}
+
+.btnSalvar:hover {
+    background: #d96b05;
+}
+
+.msgErro {
+    background: #fdf0ef;
+    color: #c0392b;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin: 0;
+    border-left: 3px solid #c0392b;
+}
+
+.msgSucesso {
+    background: #d4edda;
+    color: #155724;
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin: 0;
+    border-left: 3px solid #28a745;
+}
+
+/* Tabela de produtos */
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.tabela thead {
+    background: #f4f7f8;
+}
+
+.tabela th {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 0.8rem;
+    color: #555;
+    font-weight: 600;
+}
+
+.tabela td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.tabela tbody tr:hover {
+    background: #f9fafb;
+}
+
+.codPill {
+    background: #e6f4f4;
+    color: #348888;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}

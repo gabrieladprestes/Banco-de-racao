@@ -1,0 +1,19 @@
+.centralize {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.agendar_section {
+    display: flex;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    padding: 30px;
+    margin-bottom: 48px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    border: 2px solid black;
+    border-radius: 6px;
+    background: #fff;
+}
