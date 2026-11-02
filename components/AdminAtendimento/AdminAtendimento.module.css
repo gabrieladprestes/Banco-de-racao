@@ -1,0 +1,200 @@
+.filtros {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.filtros label {
+    display: block;
+    font-size: 0.82rem;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.campoBusca {
+    flex: 1;
+    min-width: 220px;
+}
+
+.filtros input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.btnBuscar {
+    background: #FA7F08;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: .2s;
+}
+
+.btnBuscar:hover {
+    background: #d96b05;
+}
+
+.aviso {
+    color: #999;
+    font-size: 0.9rem;
+    margin: 0 0 16px;
+}
+
+/* Tabelas */
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.tabela thead {
+    background: #348888;
+    color: white;
+}
+
+.tabela th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.tabela td {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.tabela tbody tr:hover {
+    background: #f9fafb;
+}
+
+.tabelaSelecao {
+    margin-bottom: 24px;
+}
+
+.tabelaSelecao tbody tr {
+    cursor: pointer;
+}
+
+.tabelaSelecao tbody tr.linhaSelecionada {
+    background: #e6f4f4;
+}
+
+.tabelaInterna {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.tabelaInterna thead {
+    background: #f4f7f8;
+}
+
+.tabelaInterna th {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 0.8rem;
+    color: #555;
+    font-weight: 600;
+}
+
+.tabelaInterna td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+/* Card do donatário */
+.card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    font-size: 0.95rem;
+    color: #348888;
+    font-weight: 600;
+    margin: 0 0 10px;
+}
+
+.cardHeader {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.88rem;
+    color: #666;
+}
+
+.cardHeader h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 4px;
+}
+
+.colunas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 20px;
+}
+
+.total {
+    margin: 10px 0 0;
+    font-size: 0.88rem;
+    color: #555;
+}
+
+.tituloEstoque {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #348888;
+    margin: 0 0 12px;
+}
+
+/* Badges */
+.badge {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badgeBom      { background: #d4edda; color: #155724; }
+.badgeVencendo { background: #fff3cd; color: #856404; }
+.badgeVencido  { background: #f8d7da; color: #721c24; }
+
+@media (max-width: 768px) {
+    .colunas {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 16px;
+        overflow-x: auto;
+    }
+}
