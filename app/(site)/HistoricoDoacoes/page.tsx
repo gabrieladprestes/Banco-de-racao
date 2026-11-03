@@ -1,10 +1,31 @@
+"use client";
+
 import { CustomPaddingContainer } from "@/components/CustomPaddingContainer/CustomPaddingContainer";
 import { CustomFilter } from "@/components/CustomFilter/CustomFilter";
 import { CustomHistoryTable } from "@/components/CustomHistoryTable/CustomHistoryTable";
 import { IHistoryTableTitle } from "@/interfaces/historyTableTitle.interface";
 import { IHistoryTableData } from "@/interfaces/historyTableData.interface";
+import { useState, useEffect } from "react";
 
 export default function HistoricoDoacoes() {
+    const [dadosTabela, setDadosTabela] = useState<IHistoryTableData[]>([]);
+    const url: string = "http://localhost:3010";
+
+    async function carregarDados(url: string) {
+        try {
+            const caminho = url + "/doacao";
+            await fetch(caminho)
+                .then((resp) => resp.json())
+                .then((data) => setDadosTabela(data))
+        } catch (e) {
+            console.log(`erro:${e}`);
+        }
+    }
+
+    useEffect(() => {
+        carregarDados(url);
+    }, []);
+
     const titulosTabela: IHistoryTableTitle[] = [
         {
             id: 1, 
@@ -14,38 +35,6 @@ export default function HistoricoDoacoes() {
             column4: "Lote", 
             column5: "Quantidade", 
             column6: "Observações"
-        }]
-
-    const dadosTabela: IHistoryTableData[] = [
-        {
-            id: 1,
-            column1: "Ração seca",
-            column2: "02/10/2025",
-            column3: "09/03/2030",
-            column4: "0923094",
-            column5: "3 pacotes",
-            column6: "Marca Premiere",
-            link: "../ReciboDoacao",
-        },
-        {
-            id: 2,
-            column1: "Ração úmida",
-            column2: "12/11/2025",
-            column3: "10/01/2027",
-            column4: "8402735",
-            column5: "2 pacotes",
-            column6: "Marca Magnus",
-            link: "../ReciboDoacao",
-        },
-        {
-            id: 3,
-            column1: "Ração seca",
-            column2: "12/11/2025",
-            column3: "07/02/2027",
-            column4: "4628429",
-            column5: "1 pacotes",
-            column6: "Nenhuma",
-            link: "../ReciboDoacao",
         }]
 
     return (

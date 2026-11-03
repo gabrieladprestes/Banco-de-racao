@@ -1,3 +1,5 @@
+"use client";
+
 import { CustomAgendarAviso } from "@/components/CustomAgendarAviso/CustomAgendarAviso";
 import { CustomAgendarSection } from "@/components/CustomAgendarSection/CustomAgendarSection";
 import { CustomAgendarForm } from "@/components/CustomAgendarForm/CustomAgendarForm";
@@ -6,8 +8,10 @@ import { CustomAgendarNumberInput } from "@/components/CustomAgendarNumberInput/
 import { CustomAgendarDateInput } from "@/components/CustomAgendarDateInput/CustomAgendarDateInput";
 import { CustomAgendarButton } from "@/components/CustomAgendarButton/CustomAgendarButton";
 import { IAgendarSelectInput } from "@/interfaces/agendarSelectInput.interface";
+import { useState } from "react";
 
 export default function AgendarDoacao() {
+    const [formData]
     const tipoProdutoOptions: IAgendarSelectInput[] = [
         {
             id: 1,

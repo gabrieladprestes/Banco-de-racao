@@ -1,0 +1,8 @@
+###
+GET http://localhost:3010/qtd
+
+###
+GET http://localhost:3010/usu
+
+###
+GET http://localhost:3010/retirada

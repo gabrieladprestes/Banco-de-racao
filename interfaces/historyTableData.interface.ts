@@ -1,10 +1,8 @@
 export interface IHistoryTableData {
-    id: number;
-    column1: string;
-    column2: string;
-    column3: string;
-    column4: string;
-    column5: string;
-    column6: string;
-    link: string;
+    Id_agendamento: number;
+    Categoria: string;
+    Data_agendada: string;
+    Validade: string;
+    Lote: string;
+    Quantidade: string;
 }

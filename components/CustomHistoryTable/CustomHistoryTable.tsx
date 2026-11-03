@@ -1,6 +1,7 @@
 import styles from "./CustomHistoryTable.module.css";
 import { IHistoryTableTitle } from "@/interfaces/historyTableTitle.interface";
 import { IHistoryTableData } from "@/interfaces/historyTableData.interface";
+import { formatarData } from "@/utils/dateUtils";
 
 interface CustomHistoryTableProps {
     tableTitle: string;
@@ -33,19 +34,28 @@ export const CustomHistoryTable = (props: CustomHistoryTableProps) => {
                         <tr className={styles.spacing_row} >
                             <td colSpan={7} ></td>
                         </tr>
-                        {props.columnsData.map((data) => {
-                            return(
-                                <tr key={data.id} >
-                                    <td>{data.column1}</td>
-                                    <td>{data.column2}</td>
-                                    <td>{data.column3}</td>
-                                    <td>{data.column4}</td>
-                                    <td>{data.column5}</td>
-                                    <td>{data.column6}</td>
-                                    <td><a href={data.link} className={styles.table_btn} >Ver Recibo</a></td>
-                                </tr>
-                            )
-                        })}
+                        {
+                            props.columnsData.map((data) => {
+                                console.log(props.columnsData);
+                                let dataRetirada = data.Data_agendada.slice(0, 10);
+                                dataRetirada = formatarData(dataRetirada);
+    
+                                let dataValidade = data.Validade.slice(0, 10);
+                                dataValidade = formatarData(dataValidade);
+    
+                                return(
+                                    <tr key={data.Id_agendamento} >
+                                        <td>{data.Categoria}</td>
+                                        <td>{dataRetirada}</td>
+                                        <td>{dataValidade}</td>
+                                        <td>{data.Lote}</td>
+                                        <td>{data.Quantidade}</td>
+                                        <td>Nenhuma</td>
+                                        <td><a href="../ReciboRetirada" className={styles.table_btn} >Ver Recibo</a></td>
+                                    </tr>
+                                )
+                            })
+                        }
                     </tbody>
                 </table>
             </div>
