@@ -1,5 +1,6 @@
 const sql = require("mssql/msnodesqlv8")
 const database = {
+    // Aqui vai ficar o nome do servidor do sql server. Não esqueça de trocar o nome
     server: 'NoteGab',
     database: 'Banco_Racao',
     options: {
