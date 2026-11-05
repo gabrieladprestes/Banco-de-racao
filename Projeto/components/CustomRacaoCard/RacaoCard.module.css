@@ -1,0 +1,183 @@
+
+:root {
+    --cor-verde-agua: #348888;
+    --cor-verde-agua-claro: #d5f1ef;
+    --cor-laranja: #FA7F08;
+    --cor-escuro: #2d2d2d;
+    --cor-cinza: #707070;
+    --cor-branco: #ffffff;
+}
+
+/* Cartão principal */
+.racbolha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+
+    background-color: var(--cor-branco);
+    padding: 75px;
+    margin: 25px;
+
+    border-radius: 12px;
+    box-shadow: 0px 0px 20px #2d2d2d20;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.racbolha:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 25px #2d2d2d25;
+}
+
+/* Imagem */
+.imagemContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.racicon {
+    width: 100%;
+    max-width: 240px;
+    height: 220px;
+    object-fit: contain;
+}
+
+/* Conteúdo */
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    flex: 1;
+    min-width: 0;
+}
+
+.estoque {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.label {
+    color: var(--cor-cinza);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.quantidade {
+    color: var(--cor-escuro);
+    font-size: 27px;
+    font-weight: 600;
+}
+
+/* Limite de retirada */
+.retirada {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    background-color: var(--cor-verde-agua-claro);
+    padding: 15px;
+    border-radius: 9px;
+    border-left: 4px solid var(--cor-verde-agua);
+}
+
+.limite {
+    display: block;
+    color: var(--cor-verde-agua);
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.status {
+    color: var(--cor-cinza);
+    font-size: 12px;
+}
+
+/* Disponibilidade de agendamento */
+.agendamento {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    color: var(--cor-escuro);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.disponivel,
+.indisponivel {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.disponivel {
+    background-color: #299b63;
+}
+
+.indisponivel {
+    background-color: #d94b4b;
+}
+
+/* Botão */
+.btnagend {
+    display: block;
+    text-align: center;
+
+    background-color: var(--cor-laranja);
+    padding: 14px;
+    border-radius: 7px;
+
+    border: none;
+    font-family: "Outfit", sans-serif;
+    font-weight: 500;
+    color: white;
+    font-size: 15px;
+    text-decoration: none;
+
+    transition: background-color 0.3s ease;
+}
+
+.btnagend:hover {
+    background-color: #de7309;
+    color: white;
+}
+
+/* Botão desativado */
+.btnDesativado {
+    padding: 14px;
+    border: none;
+    border-radius: 7px;
+
+    background-color: #bdbdbd;
+    color: white;
+
+    font-family: "Outfit", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: not-allowed;
+}
+
+
+@media (max-width: 650px) {
+    .racbolha {
+        flex-direction: column;
+        gap: 20px;
+        padding: 45px;
+        margin: 15px;
+    }
+
+    .racicon {
+        max-width: 180px;
+        height: 160px;
+    }
+
+    .conteudo {
+        width: 100%;
+    }
+}
