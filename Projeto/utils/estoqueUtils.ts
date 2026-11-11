@@ -40,6 +40,46 @@ export function disponivelParaLiberar(lotes: IAdminEstoqueLote[]) {
         .reduce((acc, l) => acc + Math.max(l.saldoEstoque - l.saldoReservado, 0), 0);
 }
 
+// ---- Situação do produto (Consulta de Estoque) ----
+
+// Só contam lotes com saldo: um lote vencido já zerado não precisa de atenção.
+// Um produto pode ter mais de uma situação ao mesmo tempo (ex.: sem estoque válido e com lote vencido).
+export type FiltroSituacao = "ok" | "vencendo" | "vencido" | "sem-estoque";
+
+export interface ISituacaoEstoque {
+    semEstoque: boolean;        // nenhum saldo dentro da validade
+    lotesVencidos: number;      // lotes vencidos que ainda têm saldo (precisam ser descartados)
+    saldoVencido: number;
+    lotesVencendo: number;      // lotes com saldo que vencem em até 30 dias
+}
+
+export function situacaoEstoque(lotes: IAdminEstoqueLote[]): ISituacaoEstoque {
+    const comSaldo = lotes.filter(l => l.saldoEstoque > 0);
+    const vencidos = comSaldo.filter(l => statusValidade(l.validade) === "vencido");
+    return {
+        semEstoque: saldoValido(lotes) === 0,
+        lotesVencidos: vencidos.length,
+        saldoVencido: vencidos.reduce((acc, l) => acc + l.saldoEstoque, 0),
+        lotesVencendo: comSaldo.filter(l => statusValidade(l.validade) === "vencendo").length,
+    };
+}
+
+export function temSituacao(s: ISituacaoEstoque, filtro: FiltroSituacao) {
+    if (filtro === "vencido") return s.lotesVencidos > 0;
+    if (filtro === "vencendo") return s.lotesVencendo > 0;
+    if (filtro === "sem-estoque") return s.semEstoque;
+    return !s.semEstoque && s.lotesVencidos === 0 && s.lotesVencendo === 0;
+}
+
+// Texto do prazo de validade: "vence em 20 dias", "vence hoje", "venceu há 3 dias"
+export function textoPrazo(validade: string) {
+    const dias = diasAte(validade);
+    const d = (n: number) => `${n} ${n === 1 ? "dia" : "dias"}`;
+    if (dias < 0) return `venceu há ${d(-dias)}`;
+    if (dias === 0) return "vence hoje";
+    return `vence em ${d(dias)}`;
+}
+
 // ---- Lotes ----
 
 export const textoLoteFabricante = (lote?: string) => lote?.trim() || "Não informado";

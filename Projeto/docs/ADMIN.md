@@ -31,16 +31,17 @@ utils/estoqueUtils.ts        regras de estoque: validade, disponível, lotes
 | Tela | Rota | Componente |
 |---|---|---|
 | Dashboard | `/Admin/DashboardAdmin` | `AdminDashboard` |
-| Atendimento | `/Admin/Atendimento` | `AdminAtendimento` |
+| Atendimento (abas Retirada e Doação) | `/Admin/Atendimento?aba=retirada` · `?aba=doacao` | `AdminAtendimento` (`AbaRetirada`, `AbaDoacao`) |
 | Consulta de Estoque | `/Admin/ConsultaEstoque` | `AdminConsultaEstoque` |
-| Recebimento de Doação | `/Admin/ReceberDoacao` | `AdminReceberDoacao` |
-| Saída de Doação | `/Admin/RetiradaDoacao` | `AdminSaidaDoacao` |
 | Cadastro de Produtos | `/Admin/CadastroProdutos` | `AdminCadastroProduto` |
 | Consulta de Donatários | `/Admin/ConsultaDonatario` | `AdminConsultaDonatario` |
 | Consulta de Doadores | `/Admin/ConsultaDoador` | `AdminConsultaDoador` |
 | Calendário de Retiradas | `/Admin/AgendamentosRetirada` | `AdminAgendamentosRetirada` |
 | Gerenciar Agendas | `/Admin/GerenciarAgendas` | `AdminGerenciarAgendas` |
 | Histórico | `/Admin/HistoricoRetiradas` | `AdminHistoricoRetiradas` |
+
+- `/Admin/ReceberDoacao` e `/Admin/RetiradaDoacao` (antigas páginas de Recebimento e Saída) redirecionam para a aba certa do Atendimento.
+- Modais reaproveitados: `AdminModalEntrega` (entregar retirada) e `AdminModalRecebimento` (receber doação, agendada ou sem agendamento).
 
 ### Como os dados fluem
 
@@ -70,7 +71,7 @@ export async function listarDonatarios() {
 | `estoque.service` | estoque, entrada/baixa de lotes, reserva |
 | `donatarios.service` / `doadores.service` | cadastros e buscas |
 | `retiradas.service` | pedidos de retirada: aprovar, recusar, reabrir, entregar, cancelar; histórico |
-| `doacoes.service` | doações: aprovar, recusar, reabrir, receber; histórico |
+| `doacoes.service` | doações: aprovar, recusar, reabrir, receber (agendada ou sem agendamento); histórico |
 | `atendimento.service` | regra de cota (kg por mês por pet) |
 | `dashboard.service` | números do Dashboard e a agenda |
 
@@ -88,7 +89,7 @@ Retirada:  pendente → aprovado → entregue          Doação:  pendente → a
               ↘ recusado     ↘ cancelado                       ↘ recusado
 ```
 - **Pendente**: aparece no Gerenciar Agendas.
-- **Aprovado**: aparece no Calendário, na Saída / no Receber e na Agenda do Dashboard.
+- **Aprovado**: aparece no Calendário, no Atendimento (para entregar / receber) e na Agenda do Dashboard.
 - **Entregue / recebido**: vai para o Histórico.
 - Aprovado ou recusado pode ser **reaberto** (volta a pendente).
 
@@ -101,7 +102,7 @@ Retirada:  pendente → aprovado → entregue          Doação:  pendente → a
 ### Disponível
 - **Disponível = saldo dos lotes dentro da validade − reservado.** É o mesmo número em todas as telas.
 - Lote vencido não conta e não pode sair.
-- Na Saída de Doação aparece **"Pode sair"** = disponível + a reserva da própria retirada.
+- Na entrega (Atendimento → Entregar) aparece **"Pode sair"** = disponível + a reserva da própria retirada.
 
 ### Reserva
 - **Aprovar** uma retirada reserva a quantidade no estoque.
@@ -112,6 +113,27 @@ Retirada:  pendente → aprovado → entregue          Doação:  pendente → a
 ### Saída de lotes
 - O sistema sugere os lotes que **vencem primeiro**; o funcionário pode trocar ou dividir entre lotes.
 - Não permite: mais que o solicitado, mais que o saldo do lote, lote vencido, mesmo lote duas vezes.
+
+### Atendimento (balcão)
+- Uma busca por aba: **nome, CPF/CNPJ ou código do agendamento** (+ data agendada).
+- A tabela mostra os agendamentos aprovados (atrasados em vermelho, "Hoje" destacado), com **Entregar** / **Receber**.
+- Se a busca chega a uma pessoa, o card dela aparece acima da tabela (donatário: pets, cota e retiradas do mês; doador: últimas doações).
+- **Retirada só com agendamento aprovado** (controle de cota e de estoque).
+- **Doação sem agendamento**: botão na aba Doação. Doador cadastrado (busca) ou não cadastrado (nome e CPF/CNPJ obrigatórios, telefone opcional).
+  O sistema cria o agendamento na hora, já como **recebido**, com código novo; no Histórico aparece "Sem agendamento" (e "Não cadastrado", quando for o caso).
+
+### Cadastro de Produtos
+- Tela padrão: busca (nome ou código), filtros de tipo e situação, tabela e botão **Novo produto** (abre o modal).
+- O produto novo é gravado e já entra no estoque com saldo zero (aparece no Recebimento e na Consulta de Estoque).
+- Código sugerido pelo tipo: Ração `R001`, Medicamento `M001`, Petisco `P001`, Outros `O001` (o próximo número livre; dá para alterar).
+- Não aceita código repetido nem o mesmo nome no mesmo tipo. Unidade: **kg** ou **un**.
+- **Editar**: nome, tipo, descrição; o código não muda; a unidade só muda se o produto não tiver saldo.
+- **Desativar** (com confirmação): sai do recebimento, mas fica no estoque e no histórico. **Reativar** volta ao normal. Não existe excluir.
+
+### Descarte de lote vencido
+- Na Consulta de Estoque, o lote **vencido com saldo** tem o botão **Descartar** (em "Ver lotes").
+- Pede **confirmação** (lote, quantidade e validade) antes de zerar o saldo; não pode ser desfeito.
+- O lote continua na lista como **"Descartado em DD/MM/AAAA"**.
 
 ### Cota (provisória, em `atendimento.service.ts`)
 | | Pequeno | Médio | Grande |
@@ -139,23 +161,28 @@ Rode `npm run dev` e abra `http://localhost:3000/Admin`. **Não aperte F5 no mei
 - [ ] Abrir uma tela de submenu e apertar F5: o grupo continua aberto.
 
 **Dashboard**
-- [ ] Cartões mostram estoque, validade, abaixo do mínimo (Antipulgas), pendentes e doações a receber.
+- [ ] Cartões mostram estoque, validade, pendentes e doações a receber.
 - [ ] A Agenda mostra atrasados (vermelho) e próximos 7 dias; "Abrir" leva à tela certa.
 
 **Retirada completa**
 - [ ] Consulta de Estoque: anote o reservado e o disponível da Ração de Cachorro.
 - [ ] Gerenciar Agendas → Vanessa Rocha → Aprovar. O reservado sobe 4 e o disponível cai 4.
 - [ ] Calendário: Vanessa aparece no dia agendado (use as setas ‹ › se a data cair em outro mês).
-- [ ] Saída de Doação → RET-2026-018: o lote sugerido é o que vence primeiro; o lote vencido não aparece na lista.
+- [ ] Atendimento → Retirada → busque `RET-2026-018` → Entregar: o lote sugerido é o que vence primeiro; o lote vencido não aparece na lista.
 - [ ] Digitar uma quantidade maior que a solicitada → mensagem de erro.
 - [ ] Confirmar Entrega → aparece no Histórico, com lote interno e do fabricante.
-- [ ] Atendimento → Vanessa: a coluna "Retirado" mostra o que foi entregue.
+- [ ] Atendimento → Retirada → busque Vanessa: a cota do mês mostra o que foi entregue em "Retirado".
 
 **Doação completa**
 - [ ] Gerenciar Agendas → Doações → AG-2026-012 → Confirmar Agendamento.
-- [ ] Receber Doação → AG-2026-012 → no lote do fabricante digite `WH2410` e Enter: a validade é preenchida e aparece "Soma ao lote interno L004".
+- [ ] Atendimento → Doação → busque `AG-2026-012` → Receber → no lote do fabricante digite `WH2410` e Enter: a validade é preenchida e aparece "Soma ao lote interno L004".
 - [ ] + Adicionar produto → Petisco Cachorro, lote `SN-9001`, validade e quantidade → "Novo lote interno será gerado".
 - [ ] Confirmar → a mensagem mostra `L004` e `P003 (novo)`; a Consulta de Estoque e a ficha do doador mostram a doação.
+
+**Doação sem agendamento**
+- [ ] Atendimento → Doação → "Receber doação sem agendamento" → "Doador não cadastrado" → Confirmar vazio: pede nome e documento.
+- [ ] Preencha nome, CPF com 11 dígitos, um produto com validade e quantidade → Confirmar: aparece o código novo (`AG-…`).
+- [ ] Histórico → Doações Recebidas: a doação aparece com "Sem agendamento" e "Não cadastrado".
 
 **Erros esperados**
 - [ ] Gerenciar Agendas → Paulo Henrique: quantidade 999 → "Sem estoque" e Aprovar desabilitado.
@@ -209,11 +236,12 @@ O `.env.local` não vai para o Git (está no `.gitignore`): cada pessoa cria o s
 - TypeScript, ESLint e `next build` do projeto inteiro: ainda não conferidos (a decidir com o grupo).
 
 **Integração com o banco**
-- Ainda nos mocks: Atendimento, Estoque, Receber/Saída, Gerenciar Agendas, Calendário, Histórico e Dashboard. Dependem de status, itens e motivo nos agendamentos, que o banco ainda não tem.
-- O Atendimento ainda busca donatários nos mocks: com o banco ligado, os nomes podem ser diferentes dos da Consulta de Donatários.
+- Ainda nos mocks: Atendimento, Estoque, Gerenciar Agendas, Calendário, Histórico e Dashboard. Dependem de status, itens e motivo nos agendamentos, que o banco ainda não tem.
+- O Atendimento ainda busca donatários e doadores nos mocks: com o banco ligado, os nomes podem ser diferentes dos das Consultas.
+- Doação sem agendamento: no banco, vai precisar guardar o doador não cadastrado (nome e documento) e marcar o agendamento como "sem agendamento".
 
 **No Admin (ainda não existe)**
 - Relatórios de Estoque, Cadastro de Donatário e Cadastro de Doador (aparecem desabilitados no menu).
 - Login (o "Sair" volta para a Home).
-- Cadastro de Produtos: o produto novo aparece na lista, mas ainda não é gravado no service (some ao trocar de tela).
 - Cota de medicamentos e petiscos (hoje só ração tem cota).
+- Descarte: hoje só zera o saldo no mock. Com o banco, deve gravar uma movimentação (ex.: Tipo `Descarte`) para o histórico do lote ficar guardado.

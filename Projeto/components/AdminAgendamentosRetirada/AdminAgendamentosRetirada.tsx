@@ -6,6 +6,7 @@ import { IAdminAgendaDoacao } from "../../interfaces/adminAgendaDoacao.interface
 import { buscarRetiradasAgendadas } from "../../services/retiradas.service";
 import { buscarDoacoesConfirmadas } from "../../services/doacoes.service";
 import { formatarData, getTodayDate } from "../../utils/dateUtils";
+import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
 
 const DIAS_SEMANA = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
@@ -110,9 +111,9 @@ export const AdminAgendamentosRetirada = () => {
             <div className={styles.grid}>
                 <div className={styles.calendario}>
                     <div className={styles.calHeader}>
-                        <button type="button" className={styles.btnMes} aria-label="Mês anterior" onClick={() => mudarMes(-1)}>‹</button>
-                        <h3>📅 {nomeMes}</h3>
-                        <button type="button" className={styles.btnMes} aria-label="Próximo mês" onClick={() => mudarMes(1)}>›</button>
+                        <button type="button" className={styles.btnMes} aria-label="Mês anterior" onClick={() => mudarMes(-1)}><ChevronLeft size={18} /></button>
+                        <h3><CalendarDays size={18} aria-hidden /> {nomeMes}</h3>
+                        <button type="button" className={styles.btnMes} aria-label="Próximo mês" onClick={() => mudarMes(1)}><ChevronRight size={18} /></button>
                     </div>
                     <div className={styles.calGrid}>
                         {DIAS_SEMANA.map(d => (

@@ -1,44 +1,55 @@
+/* Abas Retiradas / Doações (mesmo padrão do Atendimento) */
 .abas {
     display: flex;
     gap: 4px;
-    margin-bottom: 20px;
     border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 24px;
 }
 
 .aba {
-    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     background: none;
     border: none;
-    font-size: 0.9rem;
-    color: #777;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
+    border-bottom: 3px solid transparent;
     margin-bottom: -2px;
-    transition: color .15s;
+    padding: 10px 20px;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: #888;
+    cursor: pointer;
 }
 
-.aba:hover {
-    color: #348888;
-}
+.aba:hover { color: #348888; }
 
 .abaAtiva {
-    padding: 10px 20px;
-    background: none;
-    border: none;
-    font-size: 0.9rem;
     color: #348888;
-    font-weight: 600;
-    cursor: pointer;
-    border-bottom: 2px solid #348888;
-    margin-bottom: -2px;
+    border-bottom-color: #348888;
+}
+
+.abaSub {
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: #999;
+}
+
+/* Quantidade de pendentes na aba */
+.contadorAba {
+    background: #FA7F08;
+    color: white;
+    border-radius: 10px;
+    padding: 1px 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
 }
 
 .filtros {
     background: white;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 16px 20px;
-    margin-bottom: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
@@ -62,7 +73,7 @@
 }
 
 .btnFiltrar {
-    background: #348888;
+    background: #FA7F08;
     color: white;
     border: none;
     padding: 8px 20px;
@@ -72,7 +83,206 @@
     transition: .2s;
 }
 
-.btnFiltrar:hover { background: #2a6f6f; }
+.btnFiltrar:hover { background: #d96b05; }
+
+.campoBusca {
+    flex: 1;
+    min-width: 260px;
+}
+
+.campoBusca input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btnLimpar {
+    background: none;
+    color: #348888;
+    border: 1px solid #b2d8d8;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.88rem;
+}
+
+.btnLimpar:hover { background: #e6f4f4; }
+
+.contador {
+    font-size: 0.85rem;
+    color: #555;
+    margin: 0 0 8px;
+}
+
+/* Tabela de agendamentos */
+.tabelaWrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.tabela {
+    width: 100%;
+    min-width: 960px;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.tabela thead {
+    background: #348888;
+    color: white;
+}
+
+.tabela th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.tabela td {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+.tabela tbody tr:hover { background: #f9fafb; }
+
+.nowrap { white-space: nowrap; }
+
+.tdItens {
+    min-width: 220px;
+    max-width: 320px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.colAcao { text-align: right; }
+
+.btnAnalisar,
+.btnVer {
+    padding: 5px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Pendente: precisa de ação */
+.btnAnalisar {
+    background: #FA7F08;
+    color: white;
+    border: none;
+}
+
+.btnAnalisar:hover { background: #d96b05; }
+
+.btnVer {
+    background: #e6f4f4;
+    color: #348888;
+    border: 1px solid #b2d8d8;
+}
+
+.btnVer:hover {
+    background: #348888;
+    color: white;
+}
+
+.somenteLeitor {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* Modal de análise (conteúdo do antigo card) */
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.modal {
+    background: white;
+    border-radius: 12px;
+    width: 760px;
+    max-width: 95vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.modalHeader h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.modalCodigo {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #348888;
+    background: #e6f4f4;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+}
+
+.modalSub {
+    display: block;
+    font-size: 0.82rem;
+    color: #777;
+    margin-top: 2px;
+}
+
+.modalHeaderDireita {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btnFechar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    padding: 4px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnFechar:hover { background: #f0f0f0; }
+
+.modalFooter {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px 24px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.modalFooter:empty { display: none; }
 
 .itensSolicitados {
     margin-bottom: 16px;
@@ -153,48 +363,6 @@
     font-size: 0.88rem;
 }
 
-.lista {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.card {
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.cardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 20px;
-    cursor: pointer;
-    transition: background .15s;
-}
-
-.cardHeader:hover {
-    background: #f9fafb;
-}
-
-.cardHeaderInfo {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.cardHeaderInfo strong {
-    font-size: 0.95rem;
-    color: #333;
-}
-
-.cardHeaderInfo span {
-    font-size: 0.82rem;
-    color: #777;
-}
-
 .badge {
     padding: 3px 12px;
     border-radius: 12px;
@@ -207,9 +375,7 @@
 .badgeRecusado { background: #f8d7da; color: #721c24; }
 
 .cardBody {
-    padding: 20px;
-    border-top: 1px solid #f0f0f0;
-    background: #fafafa;
+    padding: 20px 24px;
 }
 
 .dadosGrid {
@@ -227,29 +393,6 @@
 
 .dadosGrid strong {
     color: #333;
-}
-
-.formulario h4 {
-    font-size: 0.88rem;
-    font-weight: 600;
-    color: #348888;
-    margin-bottom: 12px;
-}
-
-.formulario select,
-.formulario input {
-    padding: 7px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 0.88rem;
-    margin-right: 8px;
-    margin-bottom: 8px;
-}
-
-.acoes {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
 }
 
 .btnAprovar {

@@ -3,20 +3,13 @@ import { mockProdutos, produtoPorCodigo } from "./mocks/produtos.mock";
 import { mockSolicitacoesRetirada } from "./mocks/retiradas.mock";
 import { mockSolicitacoesDoacao } from "./mocks/doacoes.mock";
 import { donatarioPorId } from "./mocks/donatarios.mock";
-import { doadorPorId } from "./mocks/doadores.mock";
+import { dadosDoador } from "./doacoes.service";
 import { disponivelProduto } from "./estoque.service";
 import { dataRelativa, getTodayDate } from "../utils/dateUtils";
 import { statusValidade } from "../utils/estoqueUtils";
 
 // Lê os mesmos mocks das outras telas, então reflete o que foi feito na sessão.
 // Quando a API existir, este resumo pode vir pronto de um endpoint só.
-
-export interface IAdminAlertaMinimo {
-    nome: string;
-    disponivel: number;
-    minimo: number;
-    unidade: string;
-}
 
 export interface IAdminCompromisso {
     chave: string;
@@ -36,7 +29,6 @@ export interface IAdminResumoDashboard {
     lotesVencendo: number;
     lotesVencidosComSaldo: number;
     saldoVencido: number;
-    abaixoMinimo: IAdminAlertaMinimo[];
     retiradasPendentes: number;
     doacoesAReceber: number;
     agenda: IAdminCompromisso[];
@@ -52,15 +44,11 @@ export async function buscarResumoDashboard(): Promise<IAdminResumoDashboard> {
     let disponivelKg = 0;
     let disponivelUn = 0;
     let produtosComSaldo = 0;
-    const abaixoMinimo: IAdminAlertaMinimo[] = [];
     for (const produto of mockProdutos) {
         const disponivel = disponivelProduto(produto.codigo);
         if (produto.unidade === "kg") disponivelKg += disponivel;
         else disponivelUn += disponivel;
         if (disponivel > 0) produtosComSaldo++;
-        if (disponivel < produto.estoqueMinimo) {
-            abaixoMinimo.push({ nome: produto.nome, disponivel, minimo: produto.estoqueMinimo, unidade: produto.unidade });
-        }
     }
 
     // Validade dos lotes que ainda têm saldo
@@ -77,7 +65,7 @@ export async function buscarResumoDashboard(): Promise<IAdminResumoDashboard> {
             codigo: s.codigoAgendamento,
             nome: donatarioPorId(s.donatarioId).nome,
             itens: s.itens.map(i => `${nomeProduto(i.codigoProduto)} (${i.quantidade})`).join(", "),
-            href: "/Admin/RetiradaDoacao",
+            href: "/Admin/Atendimento?aba=retirada",
             atrasado: s.dataAgendada < hoje,
         }));
     const doacoes: IAdminCompromisso[] = mockSolicitacoesDoacao
@@ -87,9 +75,9 @@ export async function buscarResumoDashboard(): Promise<IAdminResumoDashboard> {
             data: s.dataProposta,
             tipo: "Doação",
             codigo: s.codigoAgendamento,
-            nome: doadorPorId(s.doadorId).nome,
+            nome: dadosDoador(s).nome,
             itens: `${nomeProduto(s.codigoProduto)} (${s.quantidade})`,
-            href: "/Admin/ReceberDoacao",
+            href: "/Admin/Atendimento?aba=doacao",
             atrasado: s.dataProposta < hoje,
         }));
 
@@ -100,7 +88,6 @@ export async function buscarResumoDashboard(): Promise<IAdminResumoDashboard> {
         lotesVencendo: lotes.filter(l => statusValidade(l.validade) === "vencendo").length,
         lotesVencidosComSaldo: vencidos.length,
         saldoVencido: vencidos.reduce((acc, l) => acc + l.saldoEstoque, 0),
-        abaixoMinimo,
         retiradasPendentes: mockSolicitacoesRetirada.filter(s => s.status === "pendente").length,
         doacoesAReceber: mockSolicitacoesDoacao.filter(s => s.status === "aprovado").length,
         agenda: [...retiradas, ...doacoes].sort((a, b) => a.data.localeCompare(b.data)),

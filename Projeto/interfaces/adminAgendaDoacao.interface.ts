@@ -5,6 +5,7 @@ export interface IAdminAgendaDoacao {
     telefone: string;
     item: string;
     quantidade: number;
+    unidade: string;          // kg ou un, do cadastro do produto
     dataProposta: string;
     status: 'pendente' | 'aprovado' | 'recusado';
     codigoAgendamento?: string;

@@ -41,12 +41,37 @@
     background: #d96b05;
 }
 
+.btnLimpar {
+    background: none;
+    color: #348888;
+    border: 1px solid #b2d8d8;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btnLimpar:hover {
+    background: #e6f4f4;
+}
+
+.contador {
+    font-size: 0.85rem;
+    color: #555;
+    margin: 0 0 8px;
+}
+
+/* A tabela rola para o lado em telas estreitas, sem cortar colunas */
+.tabelaWrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
 .tabela {
     width: 100%;
+    min-width: 860px;
     border-collapse: collapse;
     background: white;
-    border-radius: 8px;
-    overflow: hidden;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
@@ -56,6 +81,7 @@
 }
 
 .tabela th {
+    white-space: nowrap;
     padding: 12px 16px;
     text-align: left;
     font-size: 0.85rem;
@@ -78,14 +104,40 @@
     border-radius: 12px;
     font-size: 0.78rem;
     font-weight: 600;
+    white-space: nowrap;
 }
 
-.badgeBom     { background: #d4edda; color: #155724; }
-.badgeVencendo { background: #fff3cd; color: #856404; }
-.badgeVencido  { background: #f8d7da; color: #721c24; }
+.badgeBom       { background: #d4edda; color: #155724; }
+.badgeVencendo  { background: #fff3cd; color: #856404; }
+.badgeVencido   { background: #f8d7da; color: #721c24; }
+.badgeSemEstoque { background: #e5e7eb; color: #374151; }
+
+.etiquetas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.numero { white-space: nowrap; }
 
 .dispPositivo { color: #155724; font-weight: 600; }
-.dispNegativo { color: #721c24; font-weight: 600; }
+.dispZero     { color: #9ca3af; font-weight: 600; }
+
+.semResultados {
+    text-align: center;
+    color: #6b7280;
+    padding: 24px 16px !important;
+}
+
+.linkLimpar {
+    background: none;
+    border: none;
+    color: #348888;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 8px;
+}
 
 .btnVerLotes {
     background: #e6f4f4;
@@ -119,7 +171,7 @@
 .modal {
     background: white;
     border-radius: 12px;
-    width: 680px;
+    width: 980px;
     max-width: 95vw;
     max-height: 90vh;
     overflow-y: auto;
@@ -161,6 +213,9 @@
     padding: 4px 8px;
     border-radius: 4px;
     transition: background .2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btnFechar:hover {
@@ -195,8 +250,175 @@
     color: #333;
 }
 
+.tabelaLotes {
+    min-width: 720px;
+}
+
+.tabelaLotes tfoot td {
+    font-weight: 700;
+    border-bottom: none;
+    border-top: 2px solid #e0e0e0;
+}
+
+/* Lote vencido que ainda tem saldo: precisa ser descartado */
+.loteDescartar td {
+    background: #fdf2f2;
+}
+
+.prazo {
+    display: block;
+    font-size: 0.75rem;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
 .legenda {
     font-size: 0.78rem;
     color: #6b7280;
     margin-top: 8px;
+}
+
+/* ==========================================================
+   DESCARTE DE LOTE VENCIDO
+   ========================================================== */
+
+.btnDescartar {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: white;
+    color: #b42318;
+    border: 1px solid #f1a9a0;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btnDescartar:hover {
+    background: #b42318;
+    color: white;
+}
+
+.avisoSucesso {
+    background: #e7f6ef;
+    color: #1e6b45;
+    border-left: 4px solid #2e8b57;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.88rem;
+    margin: 0 0 12px;
+}
+
+.somenteLeitor {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* Confirmação fica por cima do modal de lotes */
+.backdropConfirmar {
+    z-index: 1000;
+}
+
+.modalConfirmar {
+    background: white;
+    border-radius: 12px;
+    width: 440px;
+    max-width: 92vw;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.confirmarIcone {
+    color: #b42318;
+    background: #fdecea;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.modalConfirmar h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 12px;
+}
+
+.confirmarDados {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 12px;
+    font-size: 0.88rem;
+    margin: 0 0 12px;
+}
+
+.confirmarDados dt {
+    color: #6b7280;
+    font-weight: 400;
+}
+
+.confirmarDados dd {
+    margin: 0;
+    font-weight: 600;
+}
+
+.confirmarAviso {
+    background: #fdf2f2;
+    color: #721c24;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    margin: 0 0 16px;
+}
+
+.confirmarErro {
+    color: #b42318;
+    font-size: 0.85rem;
+    margin: -8px 0 12px;
+}
+
+.confirmarBotoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.btnCancelar {
+    background: #f0f0f0;
+    color: #333;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btnCancelar:hover { background: #ddd; }
+
+.btnConfirmarDescarte {
+    background: #b42318;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.btnConfirmarDescarte:hover { background: #8f1b13; }
+
+.btnCancelar:disabled,
+.btnConfirmarDescarte:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }

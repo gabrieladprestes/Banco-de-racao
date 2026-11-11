@@ -1,4 +1,6 @@
 import { IAdminDoador } from "../interfaces/adminDoador.interface";
+import { IAdminDoadorCadastro } from "../interfaces/adminSolicitacao.interface";
+import { somenteDigitos } from "../utils/textoUtils";
 import { mockDoadores } from "./mocks/doadores.mock";
 import { mockHistoricoDoacoes } from "./mocks/doacoes.mock";
 import { apiGet, dataDoBanco, usarServidor } from "./api";
@@ -61,4 +63,21 @@ export async function listarDoadores(): Promise<IAdminDoador[]> {
     }
     const dados = await apiGet<IDoadorBanco[]>("/admin/doadores");
     return dados.map(doBanco);
+}
+
+// Atendimento: busca por parte do nome ou do CPF/CNPJ (com ou sem pontuação).
+// Ainda nos mocks, como a busca de donatários: as doações agendadas também estão nos mocks.
+export async function buscarDoadores(termo: string): Promise<IAdminDoadorCadastro[]> {
+    const nome = termo.trim().toLowerCase();
+    const documento = somenteDigitos(termo);
+    if (!nome) return [];
+    return mockDoadores.filter(d =>
+        d.nome.toLowerCase().includes(nome) ||
+        (documento.length > 0 && somenteDigitos(d.cpfCnpj).includes(documento))
+    );
+}
+
+// Atendimento: doadores cadastrados para escolher na doação sem agendamento (mocks)
+export async function listarDoadoresCadastro(): Promise<IAdminDoadorCadastro[]> {
+    return structuredClone(mockDoadores);
 }

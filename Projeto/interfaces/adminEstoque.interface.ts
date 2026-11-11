@@ -4,6 +4,7 @@ export interface IAdminEstoqueLote {
     saldoEstoque: number;
     saldoReservado: number;
     validade: string;
+    descartadoEm?: string;    // data do descarte (lote vencido que teve o saldo zerado)
 }
 
 export interface IAdminEstoque {
@@ -11,5 +12,6 @@ export interface IAdminEstoque {
     codigo: string;
     nome: string;
     tipo: string;
+    unidade: string;          // "kg" ou "un", vem do cadastro de produtos
     lotes: IAdminEstoqueLote[];
 }

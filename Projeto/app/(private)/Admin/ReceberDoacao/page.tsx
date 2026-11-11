@@ -1,5 +1,7 @@
-import { AdminReceberDoacao } from "@/components/AdminReceberDoacao/AdminReceberDoacao";
+import { redirect } from "next/navigation";
 
-export default function RecebeDoacao() {
-    return <AdminReceberDoacao />;
+// O recebimento de doações agora fica no Atendimento (aba Doação).
+// O endereço antigo continua funcionando para links salvos.
+export default function ReceberDoacao() {
+    redirect("/Admin/Atendimento?aba=doacao");
 }

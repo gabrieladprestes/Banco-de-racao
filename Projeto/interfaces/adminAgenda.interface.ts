@@ -4,6 +4,7 @@ export interface IAdminAgendaItem {
     codigoProduto: string;
     item: string;
     quantidade: number;
+    unidade: string;          // kg ou un, do cadastro do produto
 }
 
 export interface IAdminAgenda {

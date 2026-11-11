@@ -11,7 +11,7 @@ type ItemCurto = [string, string, number];
 
 function item([codigo, lote, quantidade]: ItemCurto): IAdminHistoricoItem {
     const produto = produtoPorCodigo(codigo);
-    return { codigo, nome: produto?.nome ?? codigo, tipo: produto?.tipo ?? "", lote, loteFabricante: loteFabricanteDe(lote), quantidade };
+    return { codigo, nome: produto?.nome ?? codigo, tipo: produto?.tipo ?? "", lote, loteFabricante: loteFabricanteDe(lote), quantidade, unidade: produto?.unidade ?? "kg" };
 }
 
 function recebida(id: number, doadorId: number, itens: ItemCurto[], dataRecebimento: string, responsavel: string): IAdminHistoricoDoacao {
@@ -59,7 +59,7 @@ export const mockSolicitacoesDoacao: IAdminSolicitacaoDoacao[] = [
     proposta(12, 2,  "RG001", 20, dataRelativa(3), "pendente"),
     proposta(13, 7,  "RG001", 30, dataRelativa(7), "pendente"),
     proposta(14, 8,  "RG001", 6,  dataRelativa(1), "recusado"),
-    // Aprovadas: aparecem no Calendário, em Receber Doação e na Agenda do Dashboard
+    // Aprovadas: aparecem no Calendário, no Atendimento e na Agenda do Dashboard
     proposta(15, 3,  "RC001", 5,  dataRelativa(-2), "aprovado"),
     proposta(16, 4,  "RG001", 8,  dataRelativa(0),  "aprovado"),
     proposta(17, 5,  "RC001", 50, dataRelativa(1),  "aprovado"),

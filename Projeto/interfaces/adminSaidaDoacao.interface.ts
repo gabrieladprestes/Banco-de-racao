@@ -3,6 +3,7 @@ export interface IAdminSaidaItem {
     item: string;
     quantidadeSolicitada: number;
     quantidadeEntregue: number;
+    unidade: string;          // kg ou un, do cadastro do produto
 }
 
 export interface IAdminSaidaDoacao {
