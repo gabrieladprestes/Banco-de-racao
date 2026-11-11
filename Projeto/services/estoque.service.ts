@@ -32,6 +32,11 @@ function itemDoEstoque(codigoProduto: string) {
     return item;
 }
 
+// Produto recém-cadastrado: entra no estoque sem lotes (saldo zero)
+export function incluirNoEstoque(codigoProduto: string) {
+    itemDoEstoque(codigoProduto);
+}
+
 // Espalha o total reservado pelos lotes válidos, do que vence primeiro ao último
 function redistribuirReserva(item: IAdminEstoque, total: number) {
     let falta = total;

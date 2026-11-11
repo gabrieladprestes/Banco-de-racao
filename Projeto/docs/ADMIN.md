@@ -122,6 +122,14 @@ Retirada:  pendente → aprovado → entregue          Doação:  pendente → a
 - **Doação sem agendamento**: botão na aba Doação. Doador cadastrado (busca) ou não cadastrado (nome e CPF/CNPJ obrigatórios, telefone opcional).
   O sistema cria o agendamento na hora, já como **recebido**, com código novo; no Histórico aparece "Sem agendamento" (e "Não cadastrado", quando for o caso).
 
+### Cadastro de Produtos
+- Tela padrão: busca (nome ou código), filtros de tipo e situação, tabela e botão **Novo produto** (abre o modal).
+- O produto novo é gravado e já entra no estoque com saldo zero (aparece no Recebimento e na Consulta de Estoque).
+- Código sugerido pelo tipo: Ração `R001`, Medicamento `M001`, Petisco `P001`, Outros `O001` (o próximo número livre; dá para alterar).
+- Não aceita código repetido nem o mesmo nome no mesmo tipo. Unidade: **kg** ou **un**.
+- **Editar**: nome, tipo, descrição; o código não muda; a unidade só muda se o produto não tiver saldo.
+- **Desativar** (com confirmação): sai do recebimento, mas fica no estoque e no histórico. **Reativar** volta ao normal. Não existe excluir.
+
 ### Descarte de lote vencido
 - Na Consulta de Estoque, o lote **vencido com saldo** tem o botão **Descartar** (em "Ver lotes").
 - Pede **confirmação** (lote, quantidade e validade) antes de zerar o saldo; não pode ser desfeito.
@@ -235,6 +243,5 @@ O `.env.local` não vai para o Git (está no `.gitignore`): cada pessoa cria o s
 **No Admin (ainda não existe)**
 - Relatórios de Estoque, Cadastro de Donatário e Cadastro de Doador (aparecem desabilitados no menu).
 - Login (o "Sair" volta para a Home).
-- Cadastro de Produtos: o produto novo aparece na lista, mas ainda não é gravado no service (some ao trocar de tela).
 - Cota de medicamentos e petiscos (hoje só ração tem cota).
 - Descarte: hoje só zera o saldo no mock. Com o banco, deve gravar uma movimentação (ex.: Tipo `Descarte`) para o histórico do lote ficar guardado.

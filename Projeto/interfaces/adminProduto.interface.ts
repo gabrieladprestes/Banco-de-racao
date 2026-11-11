@@ -5,4 +5,5 @@ export interface IAdminProduto {
     tipo: string;
     unidade: string;
     descricao: string;
+    ativo: boolean;   // inativo: não aparece no recebimento, mas continua no estoque e no histórico
 }

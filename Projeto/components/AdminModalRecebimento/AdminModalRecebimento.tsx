@@ -268,7 +268,8 @@ export function AdminModalRecebimento({ doacao, doadorInicial, onFechar, onConcl
                                         onChange={e => alterarItem(item.chave, { codigoProduto: e.target.value, loteFabricante: "", validade: "" })}
                                     >
                                         <option value="">Selecione o produto</option>
-                                        {produtos.map(p => (
+                                        {/* Produto desativado não aparece no recebimento */}
+                                        {produtos.filter(p => p.ativo || p.codigo === item.codigoProduto).map(p => (
                                             <option key={p.codigo} value={p.codigo}>{p.nome}</option>
                                         ))}
                                     </select>
