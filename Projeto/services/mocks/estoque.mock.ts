@@ -30,6 +30,7 @@ export const mockEstoque: IAdminEstoque[] = mockProdutos.map(p => ({
     codigo: p.codigo,
     nome: p.nome,
     tipo: p.tipo,
+    unidade: p.unidade,
     lotes: lotesPorProduto[p.codigo] ?? [],
 }));
 

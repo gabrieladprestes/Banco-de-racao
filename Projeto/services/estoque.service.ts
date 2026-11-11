@@ -25,7 +25,7 @@ function itemDoEstoque(codigoProduto: string) {
     if (!item) {
         const produto = produtoPorCodigo(codigoProduto);
         if (!produto) throw new Error(`Produto ${codigoProduto} não está cadastrado.`);
-        item = { id: produto.id, codigo: produto.codigo, nome: produto.nome, tipo: produto.tipo, lotes: [] };
+        item = { id: produto.id, codigo: produto.codigo, nome: produto.nome, tipo: produto.tipo, unidade: produto.unidade, lotes: [] };
         mockEstoque.push(item);
     }
     return item;

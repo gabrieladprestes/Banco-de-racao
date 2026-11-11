@@ -45,7 +45,11 @@ function montarIndicadores(r: IAdminResumoDashboard): IIndicador[] {
             sub: `${plural(r.produtosComSaldo, "produto com saldo", "produtos com saldo")}`,
         },
         {
-            icone: Hourglass, label: "Validade", href: "/Admin/ConsultaEstoque",
+            icone: Hourglass, label: "Validade",
+            // Abre a Consulta de Estoque já filtrada no que precisa de atenção
+            href: r.lotesVencidosComSaldo > 0 ? "/Admin/ConsultaEstoque?situacao=vencido"
+                : r.lotesVencendo > 0 ? "/Admin/ConsultaEstoque?situacao=vencendo"
+                : "/Admin/ConsultaEstoque",
             cor: r.lotesVencidosComSaldo > 0 ? "vermelho" : r.lotesVencendo > 0 ? "amarelo" : "verde",
             valor: plural(r.lotesVencendo, "lote vence em 30 dias", "lotes vencem em 30 dias"),
             sub: r.lotesVencidosComSaldo > 0

@@ -11,5 +11,6 @@ export interface IAdminEstoque {
     codigo: string;
     nome: string;
     tipo: string;
+    unidade: string;          // "kg" ou "un", vem do cadastro de produtos
     lotes: IAdminEstoqueLote[];
 }
