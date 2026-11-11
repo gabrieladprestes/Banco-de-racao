@@ -32,7 +32,7 @@ export const CustomRadioTextInput = (props: CustomRadioTextInputProps) => {
                 <span className={styles.styled_radio} ></span>
                 {props.secondLabel}
             </label>
-            <input className={isFirstSelected ? styles.text_input : styles.disabled_text_input} type="text" placeholder={isFirstSelected ? props.placeholder : ""} disabled={!isFirstSelected} />
+            {/* <input className={isFirstSelected ? styles.text_input : styles.disabled_text_input} type="text" placeholder={isFirstSelected ? props.placeholder : ""} disabled={!isFirstSelected} /> */}
         </div>
     )
 }
