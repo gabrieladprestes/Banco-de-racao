@@ -90,6 +90,18 @@ export function AdminDashboard() {
     return (
         <>
             <section className={styles.secao}>
+                <h2 className={styles.secaoTitulo}>Acesso Rápido</h2>
+                <div className={styles.acessoGrid}>
+                    {acessoRapido.map(item => (
+                        <Link key={item.href} href={item.href} className={styles.menuCard}>
+                            <div className={styles.menuIcon}><item.icone size={40} aria-hidden /></div>
+                            <h3>{item.label}</h3>
+                        </Link>
+                    ))}
+                </div>
+            </section>
+
+            <section className={styles.secao}>
                 <h2 className={styles.secaoTitulo}>Indicadores</h2>
                 {!resumo ? (
                     <p className={styles.carregando}>Carregando…</p>
@@ -158,18 +170,6 @@ export function AdminDashboard() {
                     )}
                 </section>
             )}
-
-            <section className={styles.secao}>
-                <h2 className={styles.secaoTitulo}>Acesso Rápido</h2>
-                <div className={styles.acessoGrid}>
-                    {acessoRapido.map(item => (
-                        <Link key={item.href} href={item.href} className={styles.menuCard}>
-                            <div className={styles.menuIcon}><item.icone size={40} aria-hidden /></div>
-                            <h3>{item.label}</h3>
-                        </Link>
-                    ))}
-                </div>
-            </section>
         </>
     );
 }
