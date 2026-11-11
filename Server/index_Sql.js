@@ -145,6 +145,9 @@ app.post('/agendarRetirada', async (req, resp) => {
     }
 })
 
+// Rotas da área Admin (Projeto/app/(private)/Admin): ver Server/rotas/admin.js
+app.use('/admin', require('./rotas/admin.js'));
+
 app.listen(port, () => {
     console.log(`Servidor http://localhost:${port}`);
 }); 
