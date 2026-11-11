@@ -14,6 +14,7 @@ import { documentoValido, formatarDocumento } from "../utils/textoUtils";
 // Quando a API existir, basta trocar o corpo por um fetch.
 
 const nomeProduto = (codigo: string) => produtoPorCodigo(codigo)?.nome ?? codigo;
+const unidadeProduto = (codigo: string) => produtoPorCodigo(codigo)?.unidade ?? "kg";
 
 // Nome, documento e telefone de quem doou: do cadastro ou o que foi anotado no balcão
 export function dadosDoador(s: IAdminSolicitacaoDoacao) {
@@ -35,6 +36,7 @@ export async function buscarSolicitacoesDoacao(): Promise<IAdminAgendaDoacao[]> 
                 telefone: d.telefone,
                 item: nomeProduto(s.codigoProduto),
                 quantidade: s.quantidade,
+                unidade: unidadeProduto(s.codigoProduto),
                 dataProposta: s.dataProposta,
                 status: s.status as IAdminAgendaDoacao["status"],
                 codigoAgendamento: s.codigoAgendamento,
@@ -63,6 +65,7 @@ export async function buscarDoacoesAgendadas(): Promise<IAdminDoacaoAgendada[]> 
                 codigoProduto: s.codigoProduto,
                 item: nomeProduto(s.codigoProduto),
                 quantidade: s.quantidade,
+                unidade: unidadeProduto(s.codigoProduto),
                 dataAgendada: s.dataProposta,
                 status: "agendado",
             };
@@ -104,6 +107,7 @@ function darEntrada(itens: IAdminItemRecebido[]) {
             lote: entrada.lote,
             loteFabricante: entrada.loteFabricante,
             quantidade: i.quantidade,
+            unidade: produto?.unidade ?? "kg",
             novo: entrada.novo,
         };
     });
@@ -118,7 +122,7 @@ function registrarNoHistorico(doacao: IAdminSolicitacaoDoacao, itensHistorico: R
         doador: doador.nome,
         cpfCnpj: doador.cpfCnpj,
         itens: itensHistorico.map(i => ({
-            codigo: i.codigo, nome: i.nome, tipo: i.tipo, lote: i.lote, loteFabricante: i.loteFabricante, quantidade: i.quantidade,
+            codigo: i.codigo, nome: i.nome, tipo: i.tipo, lote: i.lote, loteFabricante: i.loteFabricante, quantidade: i.quantidade, unidade: i.unidade,
         })),
         dataRecebimento: getTodayDate(),
         responsavel: usuarioLogado,

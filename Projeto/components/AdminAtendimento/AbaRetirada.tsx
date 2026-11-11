@@ -129,7 +129,8 @@ export function AbaRetirada() {
     );
     const temFiltro = filtro.termo !== "" || filtro.data !== "" || termo !== "" || data !== "";
     const cotas = selecionado ? calcularCotas(selecionado.pets, retiradasMes, aprovadosMes, estoque) : [];
-    const totalRetirado = retiradasMes.flatMap(r => r.itens).reduce((acc, i) => acc + i.quantidade, 0);
+    // Soma só o que é em kg (a cota é em kg); itens em unidades não entram no total
+    const totalRetirado = retiradasMes.flatMap(r => r.itens).filter(i => i.unidade === "kg").reduce((acc, i) => acc + i.quantidade, 0);
     const hoje = getTodayDate();
 
     return (
@@ -222,7 +223,7 @@ export function AbaRetirada() {
                                             <tr key={`${r.id}-${i}`}>
                                                 <td>{formatarData(r.dataRetirada)}</td>
                                                 <td>{item.nome}</td>
-                                                <td>{item.quantidade} kg</td>
+                                                <td>{item.quantidade} {item.unidade}</td>
                                             </tr>
                                         )))}
                                     </tbody>
@@ -287,7 +288,7 @@ export function AbaRetirada() {
                             <tr key={s.id} className={s.dataAgendada < hoje ? styles.linhaAtrasada : undefined}>
                                 <td>{s.codigoAgendamento}</td>
                                 <td>{s.nomeDonatario}</td>
-                                <td>{s.itens.map(i => `${i.item} (${i.quantidadeSolicitada} kg)`).join(", ")}</td>
+                                <td>{s.itens.map(i => `${i.item} (${i.quantidadeSolicitada} ${i.unidade})`).join(", ")}</td>
                                 <td className={styles.colData}>
                                     {formatarData(s.dataAgendada)}
                                     {s.dataAgendada < hoje && <span className={styles.tagAtrasada}>Atrasada</span>}

@@ -16,6 +16,7 @@ import { getTodayDate } from "../utils/dateUtils";
 // Quando a API existir, basta trocar o corpo por um fetch.
 
 const nomeProduto = (codigo: string) => produtoPorCodigo(codigo)?.nome ?? codigo;
+const unidadeProduto = (codigo: string) => produtoPorCodigo(codigo)?.unidade ?? "kg";
 const mesDe = (data: string) => data.slice(0, 7);
 
 // ---- Cota ----
@@ -48,7 +49,12 @@ export async function buscarSolicitacoesRetirada(): Promise<IAdminAgenda[]> {
                 donatario: d.nome,
                 cpf: d.cpf,
                 telefone: d.telefone,
-                itensSolicitados: s.itens.map(i => ({ codigoProduto: i.codigoProduto, item: nomeProduto(i.codigoProduto), quantidade: i.quantidade })),
+                itensSolicitados: s.itens.map(i => ({
+                    codigoProduto: i.codigoProduto,
+                    item: nomeProduto(i.codigoProduto),
+                    quantidade: i.quantidade,
+                    unidade: unidadeProduto(i.codigoProduto),
+                })),
                 dataSolicitacao: s.dataSolicitacao,
                 dataAgendada: s.dataAgendada,
                 status: s.status as IAdminAgenda["status"],
@@ -89,6 +95,7 @@ export async function buscarSaidasPendentes(): Promise<IAdminSaidaDoacao[]> {
                     item: nomeProduto(i.codigoProduto),
                     quantidadeSolicitada: i.quantidade,
                     quantidadeEntregue: i.quantidade,
+                    unidade: unidadeProduto(i.codigoProduto),
                 })),
                 dataAgendada: s.dataAgendada,
                 status: "aguardando",
@@ -194,6 +201,7 @@ export async function confirmarEntrega(id: number, itens: IAdminItemEntregue[], 
             lote: usado.lote,
             loteFabricante: usado.loteFabricante,
             quantidade: usado.quantidade,
+            unidade: produto?.unidade ?? "kg",
         }));
     });
     // Item que não saiu nada: a reserva dele também é devolvida

@@ -11,7 +11,7 @@ type ItemCurto = [string, string, number];
 
 function item([codigo, lote, quantidade]: ItemCurto): IAdminHistoricoItem {
     const produto = produtoPorCodigo(codigo);
-    return { codigo, nome: produto?.nome ?? codigo, tipo: produto?.tipo ?? "", lote, loteFabricante: loteFabricanteDe(lote), quantidade };
+    return { codigo, nome: produto?.nome ?? codigo, tipo: produto?.tipo ?? "", lote, loteFabricante: loteFabricanteDe(lote), quantidade, unidade: produto?.unidade ?? "kg" };
 }
 
 function recebida(id: number, doadorId: number, itens: ItemCurto[], dataRecebimento: string, responsavel: string): IAdminHistoricoDoacao {

@@ -174,8 +174,8 @@ export function AdminModalEntrega({ saida, onFechar, onConcluido }: Props) {
                                 <div className={styles.itemSaidaTopo}>
                                     <strong>{item.item}</strong>
                                     <span>
-                                        Solicitado {item.quantidadeSolicitada} kg · Pode sair {saldo} kg · A entregar{" "}
-                                        <strong className={total > item.quantidadeSolicitada ? styles.saldoBaixo : undefined}>{total} kg</strong>
+                                        Solicitado {item.quantidadeSolicitada} {item.unidade} · Pode sair {saldo} {item.unidade} · A entregar{" "}
+                                        <strong className={total > item.quantidadeSolicitada ? styles.saldoBaixo : undefined}>{total} {item.unidade}</strong>
                                     </span>
                                 </div>
 
@@ -201,7 +201,7 @@ export function AdminModalEntrega({ saida, onFechar, onConcluido }: Props) {
                                                     min={0}
                                                     onChange={e => alterarLinha(codigo, linha.chave, { quantidade: Number(e.target.value) })}
                                                 />
-                                                {" kg"}
+                                                {` ${item.unidade}`}
                                             </span>
                                             <button
                                                 type="button"

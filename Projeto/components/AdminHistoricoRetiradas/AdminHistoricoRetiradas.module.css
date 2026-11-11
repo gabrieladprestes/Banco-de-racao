@@ -32,13 +32,19 @@
     border-bottom-color: #348888;
 }
 
+.tabSub {
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: #999;
+}
+
 /* Filtros */
 .filtros {
     background: white;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     padding: 20px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
@@ -52,7 +58,8 @@
     margin-bottom: 4px;
 }
 
-.filtros input {
+.filtros input,
+.filtros select {
     padding: 8px 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -73,13 +80,45 @@
 
 .btnBuscar:hover { background: #d96b05; }
 
+.campoBusca {
+    flex: 1;
+    min-width: 260px;
+}
+
+.campoBusca input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btnLimpar {
+    background: none;
+    color: #348888;
+    border: 1px solid #b2d8d8;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btnLimpar:hover { background: #e6f4f4; }
+
+.contador {
+    font-size: 0.85rem;
+    color: #555;
+    margin: 0 0 8px;
+}
+
 /* Tabela */
+.tabelaWrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
 .tabela {
     width: 100%;
+    min-width: 900px;
     border-collapse: collapse;
     background: white;
-    border-radius: 8px;
-    overflow: hidden;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
 }
 
@@ -104,6 +143,25 @@
 
 .tabela tbody tr:hover {
     background: #f9fafb;
+}
+
+.nowrap { white-space: nowrap; }
+
+.colAcao { text-align: right; }
+
+.semResultados {
+    text-align: center;
+    color: #6b7280 !important;
+    padding: 24px 16px !important;
+}
+
+.somenteLeitor {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
 }
 
 .tdItens {

@@ -5,6 +5,7 @@ export interface IAdminHistoricoItem {
     lote: string;
     loteFabricante?: string;
     quantidade: number;
+    unidade: string;          // kg ou un, do cadastro do produto
 }
 
 export interface IAdminHistoricoRetirada {

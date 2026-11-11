@@ -183,7 +183,7 @@ export function AbaDoacao() {
                                             {r.codigoAgendamento}
                                             {r.semAgendamento && <span className={styles.tagSemAgendamento}>Sem agendamento</span>}
                                         </td>
-                                        <td>{r.itens.map(i => `${i.nome} (${i.quantidade})`).join(", ")}</td>
+                                        <td>{r.itens.map(i => `${i.nome} (${i.quantidade} ${i.unidade})`).join(", ")}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -214,7 +214,7 @@ export function AbaDoacao() {
                                 <td>{d.codigoAgendamento}</td>
                                 <td>{d.nomeDoador}</td>
                                 <td>{d.item}</td>
-                                <td>{d.quantidade}</td>
+                                <td>{d.quantidade} {d.unidade}</td>
                                 <td className={styles.colData}>
                                     {formatarData(d.dataAgendada)}
                                     {d.dataAgendada < hoje && <span className={styles.tagAtrasada}>Atrasada</span>}
