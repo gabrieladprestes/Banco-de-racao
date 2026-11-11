@@ -1,21 +1,32 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import {
+    BarChart2,
+    CalendarCheck,
+    CalendarDays,
+    ClipboardList,
+    Headset,
+    Hourglass,
+    Package,
+    PackagePlus,
+    type LucideIcon,
+} from "lucide-react";
 import styles from "./AdminDashboard.module.css";
 import { IAdminResumoDashboard, buscarResumoDashboard } from "../../services/dashboard.service";
 import { formatarData, getTodayDate } from "../../utils/dateUtils";
 
 const acessoRapido = [
-    { icone: "📊", label: "Consulta de Estoque",     href: "/Admin/ConsultaEstoque"      },
-    { icone: "📥", label: "Receber Doação",          href: "/Admin/ReceberDoacao"        },
-    { icone: "📆", label: "Calendário de Retiradas", href: "/Admin/AgendamentosRetirada" },
-    { icone: "🗂️", label: "Gerenciar Agendas",       href: "/Admin/GerenciarAgendas"     },
+    { icone: BarChart2,     label: "Consulta de Estoque",     href: "/Admin/ConsultaEstoque"      },
+    { icone: Headset,       label: "Atendimento",             href: "/Admin/Atendimento"          },
+    { icone: CalendarDays,  label: "Calendário de Retiradas", href: "/Admin/AgendamentosRetirada" },
+    { icone: CalendarCheck, label: "Gerenciar Agendas",       href: "/Admin/GerenciarAgendas"     },
 ];
 
 type Cor = "teal" | "amarelo" | "vermelho" | "verde";
 
 interface IIndicador {
-    icone: string;
+    icone: LucideIcon;
     label: string;
     valor: string;
     sub: string;
@@ -26,15 +37,18 @@ interface IIndicador {
 const plural = (n: number, singular: string, pluralTexto: string) => `${n} ${n === 1 ? singular : pluralTexto}`;
 
 function montarIndicadores(r: IAdminResumoDashboard): IIndicador[] {
-    const nomesMinimo = r.abaixoMinimo.map(a => `${a.nome} (${a.disponivel}/${a.minimo} ${a.unidade})`).join(", ");
     return [
         {
-            icone: "📦", label: "Estoque disponível", cor: "teal", href: "/Admin/ConsultaEstoque",
+            icone: Package, label: "Estoque disponível", cor: "teal", href: "/Admin/ConsultaEstoque",
             valor: `${r.disponivelKg} kg · ${r.disponivelUn} un`,
             sub: `${plural(r.produtosComSaldo, "produto com saldo", "produtos com saldo")}`,
         },
         {
-            icone: "⏳", label: "Validade", href: "/Admin/ConsultaEstoque",
+            icone: Hourglass, label: "Validade",
+            // Abre a Consulta de Estoque já filtrada no que precisa de atenção
+            href: r.lotesVencidosComSaldo > 0 ? "/Admin/ConsultaEstoque?situacao=vencido"
+                : r.lotesVencendo > 0 ? "/Admin/ConsultaEstoque?situacao=vencendo"
+                : "/Admin/ConsultaEstoque",
             cor: r.lotesVencidosComSaldo > 0 ? "vermelho" : r.lotesVencendo > 0 ? "amarelo" : "verde",
             valor: plural(r.lotesVencendo, "lote vence em 30 dias", "lotes vencem em 30 dias"),
             sub: r.lotesVencidosComSaldo > 0
@@ -42,19 +56,13 @@ function montarIndicadores(r: IAdminResumoDashboard): IIndicador[] {
                 : "Nenhum lote vencido com saldo",
         },
         {
-            icone: "⚠️", label: "Abaixo do estoque mínimo", href: "/Admin/ConsultaEstoque",
-            cor: r.abaixoMinimo.length > 0 ? "vermelho" : "verde",
-            valor: plural(r.abaixoMinimo.length, "produto", "produtos"),
-            sub: r.abaixoMinimo.length > 0 ? nomesMinimo : "Todos acima do mínimo",
-        },
-        {
-            icone: "📋", label: "Retiradas pendentes", href: "/Admin/GerenciarAgendas",
+            icone: ClipboardList, label: "Retiradas pendentes", href: "/Admin/GerenciarAgendas",
             cor: r.retiradasPendentes > 0 ? "amarelo" : "verde",
             valor: String(r.retiradasPendentes),
             sub: "Aguardando aprovação",
         },
         {
-            icone: "📥", label: "Doações a receber", cor: "teal", href: "/Admin/ReceberDoacao",
+            icone: PackagePlus, label: "Doações a receber", cor: "teal", href: "/Admin/Atendimento?aba=doacao",
             valor: String(r.doacoesAReceber),
             sub: "Aprovadas, aguardando recebimento",
         },
@@ -82,6 +90,18 @@ export function AdminDashboard() {
     return (
         <>
             <section className={styles.secao}>
+                <h2 className={styles.secaoTitulo}>Acesso Rápido</h2>
+                <div className={styles.acessoGrid}>
+                    {acessoRapido.map(item => (
+                        <Link key={item.href} href={item.href} className={styles.menuCard}>
+                            <div className={styles.menuIcon}><item.icone size={40} aria-hidden /></div>
+                            <h3>{item.label}</h3>
+                        </Link>
+                    ))}
+                </div>
+            </section>
+
+            <section className={styles.secao}>
                 <h2 className={styles.secaoTitulo}>Indicadores</h2>
                 {!resumo ? (
                     <p className={styles.carregando}>Carregando…</p>
@@ -89,7 +109,7 @@ export function AdminDashboard() {
                     <div className={styles.indicadoresGrid}>
                         {montarIndicadores(resumo).map(ind => (
                             <Link key={ind.label} href={ind.href} className={`${styles.indicadorCard} ${classeCor[ind.cor]}`}>
-                                <div className={styles.indicadorIcone}>{ind.icone}</div>
+                                <div className={styles.indicadorIcone}><ind.icone size={34} aria-hidden /></div>
                                 <div className={styles.indicadorInfo}>
                                     <span className={styles.indicadorValor}>{ind.valor}</span>
                                     <span className={styles.indicadorLabel}>{ind.label}</span>
@@ -150,18 +170,6 @@ export function AdminDashboard() {
                     )}
                 </section>
             )}
-
-            <section className={styles.secao}>
-                <h2 className={styles.secaoTitulo}>Acesso Rápido</h2>
-                <div className={styles.acessoGrid}>
-                    {acessoRapido.map(item => (
-                        <Link key={item.href} href={item.href} className={styles.menuCard}>
-                            <div className={styles.menuIcon}>{item.icone}</div>
-                            <h3>{item.label}</h3>
-                        </Link>
-                    ))}
-                </div>
-            </section>
         </>
     );
 }

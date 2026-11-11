@@ -1,6 +1,7 @@
 "use client";
 import { CSSProperties, useEffect, useId, useRef, useState } from "react";
 import styles from "./AdminCampoBusca.module.css";
+import { ChevronDown } from "lucide-react";
 
 export interface IOpcaoBusca {
     valor: string;      // o que é gravado (ex.: "L001")
@@ -33,6 +34,7 @@ export function AdminCampoBusca({
     const [destaque, setDestaque] = useState(0);
     const [posicao, setPosicao] = useState<CSSProperties>({});
     const inputRef = useRef<HTMLInputElement>(null);
+    const listaRef = useRef<HTMLUListElement>(null);
     const listaId = useId();
 
     const rotuloAtual = opcoes.find(o => o.valor === value)?.rotulo ?? value;
@@ -43,10 +45,14 @@ export function AdminCampoBusca({
         !termo || o.rotulo.toLowerCase().includes(termo) || (o.detalhe ?? "").toLowerCase().includes(termo)
     );
 
-    // Fecha a lista se a página (ou o modal) rolar
+    // Fecha a lista se a página (ou o modal) rolar.
+    // A rolagem da própria lista não conta: senão ela fecha ao tentar rolar as opções.
     useEffect(() => {
         if (!aberto) return;
-        const fechar = () => setAberto(false);
+        const fechar = (e: Event) => {
+            if (listaRef.current && e.target instanceof Node && listaRef.current.contains(e.target)) return;
+            setAberto(false);
+        };
         window.addEventListener("scroll", fechar, true);
         window.addEventListener("resize", fechar);
         return () => {
@@ -108,10 +114,18 @@ export function AdminCampoBusca({
                 }}
                 onKeyDown={teclado}
             />
-            {!textoLivre && <span className={styles.seta} aria-hidden>▾</span>}
+            {!textoLivre && <span className={styles.seta} aria-hidden><ChevronDown size={16} /></span>}
 
             {aberto && (filtradas.length > 0 || !textoLivre) && (
-                <ul id={listaId} role="listbox" className={styles.lista} style={posicao}>
+                <ul
+                    ref={listaRef}
+                    id={listaId}
+                    role="listbox"
+                    className={styles.lista}
+                    style={posicao}
+                    // Clicar ou arrastar a barra de rolagem não tira o foco do campo (que fecharia a lista)
+                    onMouseDown={e => e.preventDefault()}
+                >
                     {filtradas.map((o, i) => (
                         <li
                             key={o.valor}

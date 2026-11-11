@@ -7,6 +7,7 @@ export interface IAdminDoacaoAgendada {
     codigoProduto: string;
     item: string;
     quantidade: number;
+    unidade: string;          // kg ou un, do cadastro do produto
     dataAgendada: string;
     status: 'agendado' | 'recebido' | 'recusado';
 }

@@ -24,7 +24,8 @@
 }
 
 .menuIcon {
-    font-size: 2.7rem;
+    color: #348888;
+    line-height: 0;
     margin-bottom: 12px;
 }
 
@@ -85,9 +86,15 @@
 }
 
 .indicadorIcone {
-    font-size: 2rem;
-    line-height: 1;
+    line-height: 0;
+    flex-shrink: 0;
 }
+
+/* O ícone do indicador acompanha a cor do card */
+.indicadorTeal .indicadorIcone { color: #348888; }
+.indicadorAmarelo .indicadorIcone { color: #f0a500; }
+.indicadorVermelho .indicadorIcone { color: #d93025; }
+.indicadorVerde .indicadorIcone { color: #2e8b57; }
 
 .indicadorInfo {
     display: flex;

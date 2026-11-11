@@ -8,4 +8,6 @@ export interface IAdminHistoricoDoacao {
     itens: IAdminHistoricoItem[];
     dataRecebimento: string;
     responsavel: string;
+    semAgendamento?: boolean;       // recebida no balcão, sem agendamento
+    doadorNaoCadastrado?: boolean;  // nome e documento anotados no balcão
 }
