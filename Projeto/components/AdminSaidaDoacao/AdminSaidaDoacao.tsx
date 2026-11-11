@@ -8,6 +8,7 @@ import { buscarEstoque } from "../../services/estoque.service";
 import { formatarData } from "../../utils/dateUtils";
 import { disponivelParaLiberar, lotesParaSaida, sugerirLotesSaida, textoLoteFabricante } from "../../utils/estoqueUtils";
 import { AdminCampoBusca, IOpcaoBusca } from "../AdminCampoBusca/AdminCampoBusca";
+import { X } from "lucide-react";
 
 // Uma linha "lote + quantidade" dentro de um item da entrega
 interface ILinhaLote {
@@ -223,7 +224,7 @@ export function AdminSaidaDoacao() {
                     <div className={styles.modal} onClick={e => e.stopPropagation()}>
                         <div className={styles.modalHeader}>
                             <h2>Confirmar Saída de Doação</h2>
-                            <button type="button" className={styles.btnFechar} onClick={fecharModal}>✕</button>
+                            <button type="button" className={styles.btnFechar} onClick={fecharModal} aria-label="Fechar"><X size={20} /></button>
                         </div>
 
                         <div className={styles.modalBody}>
@@ -295,7 +296,7 @@ export function AdminSaidaDoacao() {
                                                         aria-label="Remover lote"
                                                         onClick={() => removerLinha(codigo, linha.chave)}
                                                     >
-                                                        ✕
+                                                        <X size={16} />
                                                     </button>
                                                     <span className={styles.loteInfo}>{infoDoLote(codigo, linha.lote)}</span>
                                                 </div>

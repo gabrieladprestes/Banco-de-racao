@@ -10,6 +10,7 @@ import { buscarEstoque } from "../../services/estoque.service";
 import { formatarData } from "../../utils/dateUtils";
 import { loteCorrespondente, statusValidade } from "../../utils/estoqueUtils";
 import { AdminCampoBusca, IOpcaoBusca } from "../AdminCampoBusca/AdminCampoBusca";
+import { X } from "lucide-react";
 
 // Linha editável do modal: o item agendado vem preenchido, os extras são adicionados pelo funcionário
 interface IItemRecebimento {
@@ -192,7 +193,7 @@ export function AdminReceberDoacao() {
                     <div className={styles.modal} onClick={e => e.stopPropagation()}>
                         <div className={styles.modalHeader}>
                             <h2>Detalhes da Doação</h2>
-                            <button type="button" className={styles.btnFechar} onClick={fecharModal}>✕</button>
+                            <button type="button" className={styles.btnFechar} onClick={fecharModal} aria-label="Fechar"><X size={20} /></button>
                         </div>
 
                         <div className={styles.modalBody}>
@@ -277,7 +278,7 @@ export function AdminReceberDoacao() {
                                             onClick={() => removerItem(item.chave)}
                                             aria-label="Remover item"
                                         >
-                                            ✕
+                                            <X size={16} />
                                         </button>
                                     </div>
                                     <span className={styles.previaLote}>{previaLoteInterno(item)}</span>

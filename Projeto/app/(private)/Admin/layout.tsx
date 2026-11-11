@@ -23,24 +23,27 @@ import {
     CalendarCheck,
     ScrollText,
     LogOut,
+    Menu,
+    type LucideIcon,
 } from "lucide-react";
 import styles from "./layoutSidebar.module.css";
 import logoDepartamento from "./img/logo_Bem-EstarAnimal.png";
 import logoPrefeitura from "./img/logo_prefeituraVotorantim.png";
 
-// Título mostrado no topo de cada página do admin
-const titulos: Record<string, string> = {
-    "/Admin/DashboardAdmin": "Painel Administrativo",
-    "/Admin/Atendimento": "🧾 Atendimento",
-    "/Admin/ConsultaEstoque": "📊 Consulta de Estoque",
-    "/Admin/ReceberDoacao": "📥 Recebimento de Doação",
-    "/Admin/RetiradaDoacao": "📤 Saída de Doação",
-    "/Admin/CadastroProdutos": "Cadastro de Produtos",
-    "/Admin/ConsultaDonatario": "📋 Consulta de Donatários",
-    "/Admin/ConsultaDoador": "📄 Consulta de Doadores",
-    "/Admin/AgendamentosRetirada": "📆 Calendário de Retiradas",
-    "/Admin/GerenciarAgendas": "🗂️ Gerenciar Agendas",
-    "/Admin/HistoricoRetiradas": "📜 Histórico",
+// Título mostrado no topo de cada página do admin (mesmo ícone do menu lateral)
+const tituloPadrao = { texto: "Painel Administrativo", Icone: LayoutDashboard };
+const titulos: Record<string, { texto: string; Icone: LucideIcon }> = {
+    "/Admin/DashboardAdmin": tituloPadrao,
+    "/Admin/Atendimento": { texto: "Atendimento", Icone: Headset },
+    "/Admin/ConsultaEstoque": { texto: "Consulta de Estoque", Icone: BarChart2 },
+    "/Admin/ReceberDoacao": { texto: "Recebimento de Doação", Icone: PackagePlus },
+    "/Admin/RetiradaDoacao": { texto: "Saída de Doação", Icone: PackageMinus },
+    "/Admin/CadastroProdutos": { texto: "Cadastro de Produtos", Icone: FolderOpen },
+    "/Admin/ConsultaDonatario": { texto: "Consulta de Donatários", Icone: ClipboardList },
+    "/Admin/ConsultaDoador": { texto: "Consulta de Doadores", Icone: FileSearch },
+    "/Admin/AgendamentosRetirada": { texto: "Calendário de Retiradas", Icone: CalendarDays },
+    "/Admin/GerenciarAgendas": { texto: "Gerenciar Agendas", Icone: CalendarCheck },
+    "/Admin/HistoricoRetiradas": { texto: "Histórico", Icone: ScrollText },
 };
 
 // Grupo do menu de cada página: o grupo da página atual abre sozinho
@@ -58,6 +61,7 @@ const grupoDaPagina: Record<string, string> = {
 
 export default function PrivateLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
+    const { texto: tituloTexto, Icone: TituloIcone } = titulos[pathname] ?? tituloPadrao;
     const [openMenu, setOpenMenu] = useState<string | null>(grupoDaPagina[pathname] ?? null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -155,8 +159,8 @@ export default function PrivateLayout({ children }: { children: React.ReactNode 
             <div className={styles.base}>
                 <header className={styles.topbar}>
                     <div className="d-flex align-items-center gap-3">
-                        <button type="button" className={styles.hamburger} onClick={() => setSidebarOpen(true)}>☰</button>
-                        <h1>{titulos[pathname] ?? "Painel Administrativo"}</h1>
+                        <button type="button" className={styles.hamburger} onClick={() => setSidebarOpen(true)} aria-label="Abrir menu"><Menu size={20} /></button>
+                        <h1><TituloIcone size={22} className={styles.tituloIcone} aria-hidden /> {tituloTexto}</h1>
                     </div>
                     <span className="text-muted small">Olá, Administrador</span>
                 </header>

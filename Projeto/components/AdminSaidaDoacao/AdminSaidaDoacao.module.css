@@ -121,6 +121,9 @@
     padding: 4px 8px;
     border-radius: 4px;
     transition: background .2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btnFechar:hover {
@@ -337,6 +340,9 @@
     font-size: 0.85rem;
     padding: 2px 4px;
     line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 .btnMaisLote {
     align-self: flex-start;

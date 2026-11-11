@@ -130,6 +130,9 @@
     cursor: pointer;
     line-height: 1;
     padding: 0 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modalBody {
@@ -291,6 +294,9 @@
     font-size: 0.85rem;
     padding: 2px 4px;
     line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Row para adicionar item extra */

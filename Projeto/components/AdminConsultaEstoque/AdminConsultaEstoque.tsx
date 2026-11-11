@@ -5,6 +5,7 @@ import { IAdminEstoque } from "../../interfaces/adminEstoque.interface";
 import { buscarEstoque } from "../../services/estoque.service";
 import { formatarData } from "../../utils/dateUtils";
 import { StatusValidade, disponivelParaLiberar, statusGeral, statusValidade, textoLoteFabricante, totalEstoque, totalReservado } from "../../utils/estoqueUtils";
+import { X } from "lucide-react";
 
 function badgeValidade(status: StatusValidade, s: Record<string, string>) {
     if (status === "vencido") return s.badgeVencido;
@@ -141,8 +142,9 @@ export const AdminConsultaEstoque = () => {
                                 type="button"
                                 className={styles.btnFechar}
                                 onClick={() => setProdutoSelecionado(null)}
+                                aria-label="Fechar"
                             >
-                                ✕
+                                <X size={20} />
                             </button>
                         </div>
                         <div className={styles.modalBody}>

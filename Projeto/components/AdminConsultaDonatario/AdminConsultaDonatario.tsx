@@ -4,6 +4,7 @@ import styles from "./AdminConsultaDonatario.module.css";
 import { IAdminDonatario } from "../../interfaces/adminDonatario.interface";
 import { listarDonatarios } from "../../services/donatarios.service";
 import { somenteDigitos } from "../../utils/textoUtils";
+import { X } from "lucide-react";
 
 export function AdminConsultaDonatario() {
     const [busca, setBusca] = useState("");
@@ -72,7 +73,7 @@ export function AdminConsultaDonatario() {
                     <div className={styles.modal} onClick={e => e.stopPropagation()}>
                         <div className={styles.modalHeader}>
                             <h2>Dados do Donatário</h2>
-                            <button type="button" className={styles.btnFechar} onClick={fecharModal}>✕</button>
+                            <button type="button" className={styles.btnFechar} onClick={fecharModal} aria-label="Fechar"><X size={20} /></button>
                         </div>
 
                         <div className={styles.modalBody}>

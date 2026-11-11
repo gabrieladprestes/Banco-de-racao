@@ -5,6 +5,7 @@ import { IAdminDoador } from "../../interfaces/adminDoador.interface";
 import { listarDoadores } from "../../services/doadores.service";
 import { formatarData } from "../../utils/dateUtils";
 import { somenteDigitos } from "../../utils/textoUtils";
+import { X } from "lucide-react";
 
 export function AdminConsultaDoador() {
     const [busca, setBusca] = useState("");
@@ -73,7 +74,7 @@ export function AdminConsultaDoador() {
                     <div className={styles.modal} onClick={e => e.stopPropagation()}>
                         <div className={styles.modalHeader}>
                             <h2>Dados do Doador</h2>
-                            <button type="button" className={styles.btnFechar} onClick={fecharModal}>✕</button>
+                            <button type="button" className={styles.btnFechar} onClick={fecharModal} aria-label="Fechar"><X size={20} /></button>
                         </div>
 
                         <div className={styles.modalBody}>

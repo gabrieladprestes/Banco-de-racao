@@ -1,6 +1,7 @@
 "use client";
 import { CSSProperties, useEffect, useId, useRef, useState } from "react";
 import styles from "./AdminCampoBusca.module.css";
+import { ChevronDown } from "lucide-react";
 
 export interface IOpcaoBusca {
     valor: string;      // o que é gravado (ex.: "L001")
@@ -108,7 +109,7 @@ export function AdminCampoBusca({
                 }}
                 onKeyDown={teclado}
             />
-            {!textoLivre && <span className={styles.seta} aria-hidden>▾</span>}
+            {!textoLivre && <span className={styles.seta} aria-hidden><ChevronDown size={16} /></span>}
 
             {aberto && (filtradas.length > 0 || !textoLivre) && (
                 <ul id={listaId} role="listbox" className={styles.lista} style={posicao}>

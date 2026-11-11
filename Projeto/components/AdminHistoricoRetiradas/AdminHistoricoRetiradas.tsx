@@ -7,6 +7,7 @@ import { buscarHistoricoRetiradas } from "../../services/retiradas.service";
 import { buscarHistoricoDoacoes } from "../../services/doacoes.service";
 import { formatarData } from "../../utils/dateUtils";
 import { textoLoteFabricante } from "../../utils/estoqueUtils";
+import { PackageMinus, PackagePlus, X } from "lucide-react";
 
 function resumoItens(itens: { nome: string; quantidade: number }[]) {
     return itens.map(i => `${i.nome} (${i.quantidade} kg)`).join(", ");
@@ -66,14 +67,14 @@ export const AdminHistoricoRetiradas = () => {
                     className={`${styles.tab} ${aba === "retiradas" ? styles.tabAtivo : ""}`}
                     onClick={() => setAba("retiradas")}
                 >
-                    📤 Retiradas
+                    <PackageMinus size={18} aria-hidden /> Retiradas
                 </button>
                 <button
                     type="button"
                     className={`${styles.tab} ${aba === "doacoes" ? styles.tabAtivo : ""}`}
                     onClick={() => setAba("doacoes")}
                 >
-                    📥 Doações Recebidas
+                    <PackagePlus size={18} aria-hidden /> Doações Recebidas
                 </button>
             </div>
 
@@ -206,7 +207,7 @@ export const AdminHistoricoRetiradas = () => {
                                 <span className={styles.modalCodigo}>{retiradaSelecionada.codigoAgendamento}</span>
                                 <h2>{retiradaSelecionada.donatario}</h2>
                             </div>
-                            <button type="button" className={styles.btnFechar} onClick={() => setRetiradaSelecionada(null)}>✕</button>
+                            <button type="button" className={styles.btnFechar} onClick={() => setRetiradaSelecionada(null)} aria-label="Fechar"><X size={20} /></button>
                         </div>
                         <div className={styles.modalBody}>
                             <div className={styles.modalInfo}>
@@ -252,7 +253,7 @@ export const AdminHistoricoRetiradas = () => {
                                 <span className={styles.modalCodigo}>{doacaoSelecionada.codigoAgendamento}</span>
                                 <h2>{doacaoSelecionada.doador}</h2>
                             </div>
-                            <button type="button" className={styles.btnFechar} onClick={() => setDoacaoSelecionada(null)}>✕</button>
+                            <button type="button" className={styles.btnFechar} onClick={() => setDoacaoSelecionada(null)} aria-label="Fechar"><X size={20} /></button>
                         </div>
                         <div className={styles.modalBody}>
                             <div className={styles.modalInfo}>

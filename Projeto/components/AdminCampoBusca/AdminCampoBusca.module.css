@@ -24,6 +24,7 @@
     color: #888;
     font-size: 0.75rem;
     pointer-events: none;
+    line-height: 0;
 }
 .lista {
     position: fixed;
