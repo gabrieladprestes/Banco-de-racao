@@ -72,7 +72,7 @@ export const mockSolicitacoesRetirada: IAdminSolicitacaoRetirada[] = [
     solicitacao(17, 7,  [["RC001", 8]],               dataRelativa(-2), dataRelativa(5), "pendente"),
     solicitacao(18, 12, [["RC001", 4], ["RG001", 2]], dataRelativa(0),  dataRelativa(6), "pendente"),
     solicitacao(19, 2,  [["RC001", 15]],              dataRelativa(-6), dataRelativa(2), "recusado"),
-    // Aprovadas: aparecem no Calendário, na Saída de Doação e na Agenda do Dashboard.
+    // Aprovadas: aparecem no Calendário, no Atendimento e na Agenda do Dashboard.
     // Algumas já passaram da data (atrasadas) e outras são dos próximos dias.
     solicitacao(20, 4,  [["RC001", 3]],               dataRelativa(-12), dataRelativa(-3), "aprovado"),
     solicitacao(21, 6,  [["RC001", 3], ["RG001", 2]], dataRelativa(-10), dataRelativa(-1), "aprovado"),

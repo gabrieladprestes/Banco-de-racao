@@ -72,7 +72,7 @@ export async function buscarRetiradasAgendadas(): Promise<IAdminAgendamento[]> {
         })));
 }
 
-// Saída de Doação: retiradas aprovadas aguardando a entrega
+// Atendimento (aba Retirada): retiradas aprovadas aguardando a entrega
 export async function buscarSaidasPendentes(): Promise<IAdminSaidaDoacao[]> {
     return mockSolicitacoesRetirada
         .filter(s => s.status === "aprovado")
@@ -159,7 +159,7 @@ export async function reabrirRetirada(id: number) {
     s.status = "pendente";
 }
 
-// ---- Saída de Doação ----
+// ---- Entrega (Atendimento, aba Retirada) ----
 
 function retiradaAprovada(id: number) {
     const retirada = mockSolicitacoesRetirada.find(s => s.id === id);

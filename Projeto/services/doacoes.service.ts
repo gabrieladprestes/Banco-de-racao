@@ -48,7 +48,7 @@ export async function buscarDoacoesConfirmadas(): Promise<IAdminAgendaDoacao[]> 
     return (await buscarSolicitacoesDoacao()).filter(d => d.status === "aprovado");
 }
 
-// Receber Doação: doações aprovadas aguardando o recebimento
+// Atendimento (aba Doação): doações aprovadas aguardando o recebimento
 export async function buscarDoacoesAgendadas(): Promise<IAdminDoacaoAgendada[]> {
     return mockSolicitacoesDoacao
         .filter(s => s.status === "aprovado")
@@ -127,7 +127,7 @@ function registrarNoHistorico(doacao: IAdminSolicitacaoDoacao, itensHistorico: R
     });
 }
 
-// Receber Doação: confere os itens, dá entrada dos lotes no estoque e registra no histórico
+// Recebimento de doação agendada: confere os itens, dá entrada dos lotes no estoque e registra no histórico
 export async function confirmarRecebimento(id: number, itens: IAdminItemRecebido[], observacao: string) {
     const doacao = doacaoAprovada(id);
     validarItens(itens);
@@ -190,7 +190,7 @@ export async function registrarDoacaoSemAgendamento(doador: IDoadorDoBalcao, ite
     };
 }
 
-// Receber Doação: recusa exige motivo
+// Recebimento: recusa exige motivo
 export async function recusarRecebimento(id: number, motivo: string) {
     const doacao = doacaoAprovada(id);
     if (!motivo.trim()) throw new Error("Informe o motivo da recusa no campo Observações.");

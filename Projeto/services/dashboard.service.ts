@@ -65,7 +65,7 @@ export async function buscarResumoDashboard(): Promise<IAdminResumoDashboard> {
             codigo: s.codigoAgendamento,
             nome: donatarioPorId(s.donatarioId).nome,
             itens: s.itens.map(i => `${nomeProduto(i.codigoProduto)} (${i.quantidade})`).join(", "),
-            href: "/Admin/RetiradaDoacao",
+            href: "/Admin/Atendimento?aba=retirada",
             atrasado: s.dataAgendada < hoje,
         }));
     const doacoes: IAdminCompromisso[] = mockSolicitacoesDoacao
@@ -77,7 +77,7 @@ export async function buscarResumoDashboard(): Promise<IAdminResumoDashboard> {
             codigo: s.codigoAgendamento,
             nome: dadosDoador(s).nome,
             itens: `${nomeProduto(s.codigoProduto)} (${s.quantidade})`,
-            href: "/Admin/ReceberDoacao",
+            href: "/Admin/Atendimento?aba=doacao",
             atrasado: s.dataProposta < hoje,
         }));
 

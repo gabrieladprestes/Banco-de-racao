@@ -136,7 +136,7 @@ export function AdminModalEntrega({ saida, onFechar, onConcluido }: Props) {
         <div className={styles.backdrop} onClick={onFechar}>
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
                 <div className={styles.modalHeader}>
-                    <h2>Confirmar Saída de Doação</h2>
+                    <h2>Confirmar Entrega</h2>
                     <button type="button" className={styles.btnFechar} onClick={onFechar} aria-label="Fechar"><X size={20} /></button>
                 </div>
 

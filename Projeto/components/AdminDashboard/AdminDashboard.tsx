@@ -6,6 +6,7 @@ import {
     CalendarCheck,
     CalendarDays,
     ClipboardList,
+    Headset,
     Hourglass,
     Package,
     PackagePlus,
@@ -17,7 +18,7 @@ import { formatarData, getTodayDate } from "../../utils/dateUtils";
 
 const acessoRapido = [
     { icone: BarChart2,     label: "Consulta de Estoque",     href: "/Admin/ConsultaEstoque"      },
-    { icone: PackagePlus,   label: "Receber Doação",          href: "/Admin/ReceberDoacao"        },
+    { icone: Headset,       label: "Atendimento",             href: "/Admin/Atendimento"          },
     { icone: CalendarDays,  label: "Calendário de Retiradas", href: "/Admin/AgendamentosRetirada" },
     { icone: CalendarCheck, label: "Gerenciar Agendas",       href: "/Admin/GerenciarAgendas"     },
 ];
@@ -61,7 +62,7 @@ function montarIndicadores(r: IAdminResumoDashboard): IIndicador[] {
             sub: "Aguardando aprovação",
         },
         {
-            icone: PackagePlus, label: "Doações a receber", cor: "teal", href: "/Admin/ReceberDoacao",
+            icone: PackagePlus, label: "Doações a receber", cor: "teal", href: "/Admin/Atendimento?aba=doacao",
             valor: String(r.doacoesAReceber),
             sub: "Aprovadas, aguardando recebimento",
         },

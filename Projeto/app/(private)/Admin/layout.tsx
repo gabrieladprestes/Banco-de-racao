@@ -9,8 +9,6 @@ import {
     Headset,
     Package,
     BarChart2,
-    PackagePlus,
-    PackageMinus,
     FileText,
     FolderOpen,
     Users,
@@ -36,8 +34,6 @@ const titulos: Record<string, { texto: string; Icone: LucideIcon }> = {
     "/Admin/DashboardAdmin": tituloPadrao,
     "/Admin/Atendimento": { texto: "Atendimento", Icone: Headset },
     "/Admin/ConsultaEstoque": { texto: "Consulta de Estoque", Icone: BarChart2 },
-    "/Admin/ReceberDoacao": { texto: "Recebimento de Doação", Icone: PackagePlus },
-    "/Admin/RetiradaDoacao": { texto: "Saída de Doação", Icone: PackageMinus },
     "/Admin/CadastroProdutos": { texto: "Cadastro de Produtos", Icone: FolderOpen },
     "/Admin/ConsultaDonatario": { texto: "Consulta de Donatários", Icone: ClipboardList },
     "/Admin/ConsultaDoador": { texto: "Consulta de Doadores", Icone: FileSearch },
@@ -49,8 +45,6 @@ const titulos: Record<string, { texto: string; Icone: LucideIcon }> = {
 // Grupo do menu de cada página: o grupo da página atual abre sozinho
 const grupoDaPagina: Record<string, string> = {
     "/Admin/ConsultaEstoque": "estoque",
-    "/Admin/ReceberDoacao": "estoque",
-    "/Admin/RetiradaDoacao": "estoque",
     "/Admin/CadastroProdutos": "estoque",
     "/Admin/ConsultaDonatario": "donatarios",
     "/Admin/ConsultaDoador": "doadores",
@@ -109,8 +103,6 @@ export default function PrivateLayout({ children }: { children: React.ReactNode 
                         </button>
                         <div className={openMenu === 'estoque' ? styles.submenuOpen : styles.submenu}>
                             <Link href="/Admin/ConsultaEstoque" className={ativo("/Admin/ConsultaEstoque")} onClick={fechar}><BarChart2 size={14} /> Consulta de Estoque</Link>
-                            <Link href="/Admin/ReceberDoacao" className={ativo("/Admin/ReceberDoacao")} onClick={fechar}><PackagePlus size={14} /> Recebimento de Doação</Link>
-                            <Link href="/Admin/RetiradaDoacao" className={ativo("/Admin/RetiradaDoacao")} onClick={fechar}><PackageMinus size={14} /> Saída de Doação</Link>
                             <span className={styles.submenuLinkDisabled}><FileText size={14} /> Relatórios de Estoque</span>
                             <Link href="/Admin/CadastroProdutos" className={ativo("/Admin/CadastroProdutos")} onClick={fechar}><FolderOpen size={14} /> Cadastro de Produtos</Link>
                         </div>

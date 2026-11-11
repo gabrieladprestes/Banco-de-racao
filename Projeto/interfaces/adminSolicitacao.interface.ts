@@ -7,7 +7,7 @@ export interface IAdminSolicitacaoItem {
 }
 
 // Pedido de retirada feito pelo donatário.
-// pendente -> aprovado (aparece no Calendário e na Saída) -> entregue (vai para o Histórico)
+// pendente -> aprovado (aparece no Calendário e no Atendimento) -> entregue (vai para o Histórico)
 export interface IAdminSolicitacaoRetirada {
     id: number;
     codigoAgendamento: string;
@@ -27,7 +27,7 @@ export interface IAdminDoadorNaoCadastrado {
 }
 
 // Proposta de doação feita pelo doador.
-// pendente -> aprovado (aparece no Calendário e em Receber Doação) -> recebido (vai para o Histórico)
+// pendente -> aprovado (aparece no Calendário e no Atendimento) -> recebido (vai para o Histórico)
 // Doação sem agendamento (no balcão) já nasce como recebido, com a data do dia.
 export interface IAdminSolicitacaoDoacao {
     id: number;

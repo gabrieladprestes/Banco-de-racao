@@ -140,7 +140,7 @@ export const AdminConsultaEstoque = () => {
         }
     }
 
-    // Lotes do modal: o que vence primeiro em cima (mesma ordem da Saída de Doação)
+    // Lotes do modal: o que vence primeiro em cima (mesma ordem da entrega no Atendimento)
     const lotesOrdenados = produtoSelecionado
         ? [...produtoSelecionado.lotes].sort((a, b) => a.validade.localeCompare(b.validade))
         : [];
