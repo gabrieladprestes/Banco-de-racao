@@ -23,7 +23,7 @@ const PORTES: PortePet[] = ["Pequeno", "Médio", "Grande"];
 
 function doBanco(d: IDonatarioBanco): IAdminDonatario {
     return {
-        id: d.Id_usuario,
+        id: Number(d.Id_usuario),
         nome: d.Nome ?? "(sem nome)",
         cpf: d.CPF,
         telefone: d.Telefone ?? "",
@@ -31,7 +31,7 @@ function doBanco(d: IDonatarioBanco): IAdminDonatario {
         pets: d.Animais
             .filter(a => a.Especie && ESPECIE[a.Especie])
             .map(a => ({
-                id: a.Id_animal,
+                id: Number(a.Id_animal),
                 nome: a.Nome ?? "(sem nome)",
                 especie: ESPECIE[a.Especie!],
                 // Gato não tem porte no banco; para a cota de gato o porte não muda nada

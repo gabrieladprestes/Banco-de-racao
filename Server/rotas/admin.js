@@ -9,6 +9,10 @@ const { conectar } = require('../database.js');
 
 const router = express.Router();
 
+// O driver do SQL Server pode devolver números como texto (ex.: "7"),
+// e nem sempre do mesmo jeito em consultas diferentes. Converte antes de comparar.
+const numero = valor => (valor === null || valor === undefined ? null : Number(valor));
+
 // Envia o erro com status 500, para o front saber que algo deu errado
 function responderErro(resp, contexto, error) {
     console.error(`Erro em ${contexto}:`, error.message);
@@ -36,7 +40,7 @@ router.get('/donatarios', async (req, resp) => {
         `);
 
         const donatarios = pessoas.recordset.map(p => ({
-            Id_usuario: p.Id_usuario,
+            Id_usuario: numero(p.Id_usuario),
             Nome: p.Nome,
             Email: p.Email,
             Telefone: p.Telefone,
@@ -45,7 +49,7 @@ router.get('/donatarios', async (req, resp) => {
             Cad_unico: p.Cad_unico,
             Animais: animais.recordset
                 .filter(a => a.CPF === p.CPF)
-                .map(a => ({ Id_animal: a.Id_animal, Nome: a.Nome, Especie: a.Especie, Porte: a.Porte, Idade: a.Idade })),
+                .map(a => ({ Id_animal: numero(a.Id_animal), Nome: a.Nome, Especie: a.Especie, Porte: a.Porte, Idade: a.Idade })),
         }));
 
         resp.json(donatarios);
@@ -84,7 +88,7 @@ router.get('/doadores', async (req, resp) => {
         `);
 
         const doadores = pessoas.recordset.map(p => ({
-            Id_usuario: p.Id_usuario,
+            Id_usuario: numero(p.Id_usuario),
             Nome: p.Nome,
             Email: p.Email,
             Telefone: p.Telefone,
@@ -92,16 +96,16 @@ router.get('/doadores', async (req, resp) => {
             CPF: p.CPF,
             CNPJ: p.CNPJ,
             Doacoes: doacoes.recordset
-                .filter(d => d.Id_usuario === p.Id_usuario)
+                .filter(d => numero(d.Id_usuario) === numero(p.Id_usuario))
                 .map(d => ({
-                    Id_agendamento: d.Id_agendamento,
-                    Id_lote_produto: d.Id_lote_produto,
+                    Id_agendamento: numero(d.Id_agendamento),
+                    Id_lote_produto: numero(d.Id_lote_produto),
                     Data_agendada: d.Data_agendada,
                     Produto: d.Produto,
                     Peso: d.Peso,
                     Categoria: d.Categoria,
                     Lote: d.Lote,
-                    Quantidade: d.Quantidade,
+                    Quantidade: numero(d.Quantidade),
                 })),
         }));
 

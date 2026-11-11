@@ -27,18 +27,18 @@ interface IDoadorBanco {
 
 function doBanco(d: IDoadorBanco): IAdminDoador {
     return {
-        id: d.Id_usuario,
+        id: Number(d.Id_usuario),
         nome: d.Nome ?? "(sem nome)",
         cpfCnpj: d.CNPJ ?? d.CPF ?? "",
         telefone: d.Telefone ?? "",
         endereco: d.CEP ? `CEP ${d.CEP}` : "Não informado",
         historicoDoacoes: d.Doacoes.map(doacao => ({
             // um agendamento pode ter vários lotes: a chave junta os dois
-            id: doacao.Id_agendamento * 100000 + doacao.Id_lote_produto,
+            id: Number(doacao.Id_agendamento) * 100000 + Number(doacao.Id_lote_produto),
             // ex.: "Ração Média 280g (Ração úmida)"
             tipo: [doacao.Produto, doacao.Peso].filter(Boolean).join(" ") + (doacao.Categoria ? ` (${doacao.Categoria})` : ""),
             // o banco conta unidades/sacos do produto, não kg
-            quantidade: doacao.Quantidade ?? 0,
+            quantidade: Number(doacao.Quantidade ?? 0),
             data: dataDoBanco(doacao.Data_agendada),
         })),
     };
