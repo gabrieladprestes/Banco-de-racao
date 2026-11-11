@@ -4,6 +4,7 @@ export interface IAdminEstoqueLote {
     saldoEstoque: number;
     saldoReservado: number;
     validade: string;
+    descartadoEm?: string;    // data do descarte (lote vencido que teve o saldo zerado)
 }
 
 export interface IAdminEstoque {

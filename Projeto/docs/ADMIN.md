@@ -113,6 +113,11 @@ Retirada:  pendente → aprovado → entregue          Doação:  pendente → a
 - O sistema sugere os lotes que **vencem primeiro**; o funcionário pode trocar ou dividir entre lotes.
 - Não permite: mais que o solicitado, mais que o saldo do lote, lote vencido, mesmo lote duas vezes.
 
+### Descarte de lote vencido
+- Na Consulta de Estoque, o lote **vencido com saldo** tem o botão **Descartar** (em "Ver lotes").
+- Pede **confirmação** (lote, quantidade e validade) antes de zerar o saldo; não pode ser desfeito.
+- O lote continua na lista como **"Descartado em DD/MM/AAAA"**.
+
 ### Cota (provisória, em `atendimento.service.ts`)
 | | Pequeno | Médio | Grande |
 |---|---|---|---|
@@ -217,3 +222,4 @@ O `.env.local` não vai para o Git (está no `.gitignore`): cada pessoa cria o s
 - Login (o "Sair" volta para a Home).
 - Cadastro de Produtos: o produto novo aparece na lista, mas ainda não é gravado no service (some ao trocar de tela).
 - Cota de medicamentos e petiscos (hoje só ração tem cota).
+- Descarte: hoje só zera o saldo no mock. Com o banco, deve gravar uma movimentação (ex.: Tipo `Descarte`) para o histórico do lote ficar guardado.

@@ -4,6 +4,7 @@ import { mockEstoque } from "./mocks/estoque.mock";
 import { mockSolicitacoesRetirada } from "./mocks/retiradas.mock";
 import { produtoPorCodigo } from "./mocks/produtos.mock";
 import { disponivelParaLiberar, loteCorrespondente, prefixoLote, statusValidade, totalReservado } from "../utils/estoqueUtils";
+import { getTodayDate } from "../utils/dateUtils";
 
 // As funções abaixo leem e alteram os mocks (só na memória: voltam ao original com F5).
 // Quando a API existir, basta trocar o corpo por um fetch.
@@ -40,6 +41,21 @@ function redistribuirReserva(item: IAdminEstoque, total: number) {
         lote.saldoReservado = pode;
         falta -= pode;
     }
+}
+
+// Descarte de lote vencido: zera o saldo e marca a data. O lote continua na lista
+// (com o banco, o descarte deve virar uma movimentação, para o histórico do lote ficar guardado).
+export async function descartarLote(codigoProduto: string, loteInterno: string) {
+    const item = mockEstoque.find(e => e.codigo === codigoProduto);
+    const lote = item?.lotes.find(l => l.lote === loteInterno);
+    if (!item || !lote) throw new Error(`Lote ${loteInterno} não encontrado.`);
+    if (statusValidade(lote.validade) !== "vencido") throw new Error(`O lote ${loteInterno} ainda está dentro da validade.`);
+    if (lote.saldoEstoque <= 0) throw new Error(`O lote ${loteInterno} já está sem saldo.`);
+    const quantidade = lote.saldoEstoque;
+    lote.saldoEstoque = 0;
+    lote.saldoReservado = 0;
+    lote.descartadoEm = getTodayDate();
+    return quantidade;
 }
 
 // Disponível para novas aprovações: lotes válidos menos o que já está reservado

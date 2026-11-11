@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import styles from "./AdminConsultaEstoque.module.css";
-import { IAdminEstoque } from "../../interfaces/adminEstoque.interface";
-import { buscarEstoque } from "../../services/estoque.service";
+import { IAdminEstoque, IAdminEstoqueLote } from "../../interfaces/adminEstoque.interface";
+import { buscarEstoque, descartarLote } from "../../services/estoque.service";
 import { formatarData } from "../../utils/dateUtils";
 import {
     FiltroSituacao,
@@ -17,7 +17,7 @@ import {
     totalEstoque,
     totalReservado,
 } from "../../utils/estoqueUtils";
-import { X } from "lucide-react";
+import { Trash2, TriangleAlert, X } from "lucide-react";
 
 const SITUACOES: { valor: FiltroSituacao; texto: string }[] = [
     { valor: "ok", texto: "OK" },
@@ -43,14 +43,16 @@ function etiquetasSituacao(s: ISituacaoEstoque, unidade: string) {
     return etiquetas;
 }
 
-function badgeLote(status: StatusValidade) {
+function badgeLote(status: StatusValidade, lote: IAdminEstoqueLote) {
+    if (lote.descartadoEm) return styles.badgeSemEstoque;
     if (status === "vencido") return styles.badgeVencido;
     if (status === "vencendo") return styles.badgeVencendo;
     return styles.badgeBom;
 }
 
-function textoLote(status: StatusValidade, saldo: number) {
-    if (status === "vencido") return saldo > 0 ? "Vencido — descartar" : "Vencido";
+function textoLote(status: StatusValidade, lote: IAdminEstoqueLote) {
+    if (lote.descartadoEm) return `Descartado em ${formatarData(lote.descartadoEm)}`;
+    if (status === "vencido") return lote.saldoEstoque > 0 ? "Vencido — descartar" : "Vencido";
     if (status === "vencendo") return "Vencendo";
     return "Bom";
 }
@@ -72,6 +74,11 @@ export const AdminConsultaEstoque = () => {
     const [resultado, setResultado] = useState<IAdminEstoque[]>([]);
     const [carregando, setCarregando] = useState(true);
     const [produtoSelecionado, setProdutoSelecionado] = useState<IAdminEstoque | null>(null);
+    // Descarte: o lote escolhido só tem o saldo zerado depois da confirmação
+    const [loteParaDescartar, setLoteParaDescartar] = useState<IAdminEstoqueLote | null>(null);
+    const [descartando, setDescartando] = useState(false);
+    const [erroDescarte, setErroDescarte] = useState("");
+    const [avisoLotes, setAvisoLotes] = useState("");
 
     useEffect(() => {
         // Os cards do Dashboard abrem a tela já filtrada: /Admin/ConsultaEstoque?situacao=vencido
@@ -97,6 +104,41 @@ export const AdminConsultaEstoque = () => {
     }
 
     const temFiltro = tipo !== "" || busca !== "" || filtroSituacao !== "";
+
+    function abrirLotes(item: IAdminEstoque) {
+        setAvisoLotes("");
+        setProdutoSelecionado(item);
+    }
+
+    function fecharLotes() {
+        setProdutoSelecionado(null);
+        setAvisoLotes("");
+    }
+
+    function cancelarDescarte() {
+        setLoteParaDescartar(null);
+        setErroDescarte("");
+    }
+
+    async function confirmarDescarte() {
+        if (!produtoSelecionado || !loteParaDescartar) return;
+        setDescartando(true);
+        setErroDescarte("");
+        try {
+            const quantidade = await descartarLote(produtoSelecionado.codigo, loteParaDescartar.lote);
+            // Recarrega e atualiza a tabela (mantendo os filtros aplicados) e o modal
+            const dados = await buscarEstoque();
+            setEstoque(dados);
+            setResultado(atual => atual.map(i => dados.find(d => d.id === i.id) ?? i));
+            setProdutoSelecionado(dados.find(d => d.id === produtoSelecionado.id) ?? null);
+            setAvisoLotes(`Lote ${loteParaDescartar.lote} descartado: ${quantidade} ${produtoSelecionado.unidade} retirados do estoque.`);
+            setLoteParaDescartar(null);
+        } catch (e) {
+            setErroDescarte(e instanceof Error ? e.message : "Não foi possível descartar o lote.");
+        } finally {
+            setDescartando(false);
+        }
+    }
 
     // Lotes do modal: o que vence primeiro em cima (mesma ordem da Saída de Doação)
     const lotesOrdenados = produtoSelecionado
@@ -196,7 +238,7 @@ export const AdminConsultaEstoque = () => {
                                         <button
                                             type="button"
                                             className={styles.btnVerLotes}
-                                            onClick={() => setProdutoSelecionado(item)}
+                                            onClick={() => abrirLotes(item)}
                                         >
                                             Ver lotes ({item.lotes.length})
                                         </button>
@@ -213,7 +255,7 @@ export const AdminConsultaEstoque = () => {
             </p>
 
             {produtoSelecionado && (
-                <div className={styles.backdrop} onClick={() => setProdutoSelecionado(null)}>
+                <div className={styles.backdrop} onClick={fecharLotes}>
                     <div className={styles.modal} onClick={e => e.stopPropagation()}>
                         <div className={styles.modalHeader}>
                             <div>
@@ -223,13 +265,14 @@ export const AdminConsultaEstoque = () => {
                             <button
                                 type="button"
                                 className={styles.btnFechar}
-                                onClick={() => setProdutoSelecionado(null)}
+                                onClick={fecharLotes}
                                 aria-label="Fechar"
                             >
                                 <X size={20} />
                             </button>
                         </div>
                         <div className={styles.modalBody}>
+                            {avisoLotes && <p className={styles.avisoSucesso} role="status">{avisoLotes}</p>}
                             {lotesOrdenados.length === 0 ? (
                                 <p className={styles.semResultados}>Nenhum lote cadastrado para este produto.</p>
                             ) : (
@@ -244,6 +287,7 @@ export const AdminConsultaEstoque = () => {
                                                 <th>Disponível</th>
                                                 <th>Validade</th>
                                                 <th>Situação</th>
+                                                <th><span className={styles.somenteLeitor}>Ações</span></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -266,9 +310,20 @@ export const AdminConsultaEstoque = () => {
                                                             <span className={styles.prazo}>{textoPrazo(lote.validade)}</span>
                                                         </td>
                                                         <td>
-                                                            <span className={`${styles.badge} ${badgeLote(sv)}`}>
-                                                                {textoLote(sv, lote.saldoEstoque)}
+                                                            <span className={`${styles.badge} ${badgeLote(sv, lote)}`}>
+                                                                {textoLote(sv, lote)}
                                                             </span>
+                                                        </td>
+                                                        <td>
+                                                            {descartar && (
+                                                                <button
+                                                                    type="button"
+                                                                    className={styles.btnDescartar}
+                                                                    onClick={() => setLoteParaDescartar(lote)}
+                                                                >
+                                                                    <Trash2 size={14} aria-hidden /> Descartar
+                                                                </button>
+                                                            )}
                                                         </td>
                                                     </tr>
                                                 );
@@ -280,12 +335,49 @@ export const AdminConsultaEstoque = () => {
                                                 <td className={styles.numero}>{totalEstoque(produtoSelecionado.lotes)} {produtoSelecionado.unidade}</td>
                                                 <td className={styles.numero}>{totalReservado(produtoSelecionado.lotes)} {produtoSelecionado.unidade}</td>
                                                 <td className={styles.numero}>{disponivelParaLiberar(produtoSelecionado.lotes)} {produtoSelecionado.unidade}</td>
-                                                <td colSpan={2}></td>
+                                                <td colSpan={3}></td>
                                             </tr>
                                         </tfoot>
                                     </table>
                                 </div>
                             )}
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {produtoSelecionado && loteParaDescartar && (
+                <div className={`${styles.backdrop} ${styles.backdropConfirmar}`} onClick={() => !descartando && cancelarDescarte()}>
+                    <div
+                        className={styles.modalConfirmar}
+                        role="alertdialog"
+                        aria-modal="true"
+                        aria-labelledby="titulo-descarte"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <div className={styles.confirmarIcone}><TriangleAlert size={28} aria-hidden /></div>
+                        <h2 id="titulo-descarte">Descartar o lote {loteParaDescartar.lote}?</h2>
+                        <dl className={styles.confirmarDados}>
+                            <dt>Produto</dt>
+                            <dd>{produtoSelecionado.nome} ({produtoSelecionado.codigo})</dd>
+                            <dt>Lote fabricante</dt>
+                            <dd>{textoLoteFabricante(loteParaDescartar.loteFabricante)}</dd>
+                            <dt>Quantidade</dt>
+                            <dd>{loteParaDescartar.saldoEstoque} {produtoSelecionado.unidade}</dd>
+                            <dt>Validade</dt>
+                            <dd>{formatarData(loteParaDescartar.validade)} ({textoPrazo(loteParaDescartar.validade)})</dd>
+                        </dl>
+                        <p className={styles.confirmarAviso}>
+                            O saldo deste lote será zerado. <strong>Esta ação não pode ser desfeita.</strong>
+                        </p>
+                        {erroDescarte && <p className={styles.confirmarErro} role="alert">{erroDescarte}</p>}
+                        <div className={styles.confirmarBotoes}>
+                            <button type="button" className={styles.btnCancelar} onClick={cancelarDescarte} disabled={descartando} autoFocus>
+                                Cancelar
+                            </button>
+                            <button type="button" className={styles.btnConfirmarDescarte} onClick={confirmarDescarte} disabled={descartando}>
+                                {descartando ? "Descartando…" : "Confirmar descarte"}
+                            </button>
                         </div>
                     </div>
                 </div>
