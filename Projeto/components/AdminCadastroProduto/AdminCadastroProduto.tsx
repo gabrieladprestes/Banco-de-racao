@@ -11,7 +11,6 @@ export const AdminCadastroProduto = () => {
     const [tipo, setTipo] = useState("");
     const [unidade, setUnidade] = useState("kg");
     const [descricao, setDescricao] = useState("");
-    const [estoqueMinimo, setEstoqueMinimo] = useState(0);
     const [erro, setErro] = useState("");
     const [sucesso, setSucesso] = useState(false);
 
@@ -29,13 +28,12 @@ export const AdminCadastroProduto = () => {
             setErro("Já existe um produto com este código.");
             return;
         }
-        setProdutos([...produtos, { id: produtos.length + 1, codigo, nome, tipo, unidade, descricao, estoqueMinimo }]);
+        setProdutos([...produtos, { id: produtos.length + 1, codigo, nome, tipo, unidade, descricao }]);
         setCodigo("");
         setNome("");
         setTipo("");
         setUnidade("kg");
         setDescricao("");
-        setEstoqueMinimo(0);
         setErro("");
         setSucesso(true);
         setTimeout(() => setSucesso(false), 3000);
@@ -79,28 +77,16 @@ export const AdminCadastroProduto = () => {
                         />
                     </div>
 
-                    <div className={styles.row2}>
-                        <div className={styles.campo}>
-                            <label>Unidade de medida</label>
-                            <select aria-label="Unidade de medida" value={unidade} onChange={e => setUnidade(e.target.value)}>
-                                <option value="kg">kg</option>
-                                <option value="g">g</option>
-                                <option value="un">un</option>
-                                <option value="ml">ml</option>
-                                <option value="L">L</option>
-                                <option value="caixa">caixa</option>
-                            </select>
-                        </div>
-                        <div className={styles.campo}>
-                            <label>Estoque mínimo de alerta</label>
-                            <input
-                                type="number"
-                                aria-label="Estoque mínimo"
-                                min={0}
-                                value={estoqueMinimo}
-                                onChange={e => setEstoqueMinimo(Number(e.target.value))}
-                            />
-                        </div>
+                    <div className={styles.campo}>
+                        <label>Unidade de medida</label>
+                        <select aria-label="Unidade de medida" value={unidade} onChange={e => setUnidade(e.target.value)}>
+                            <option value="kg">kg</option>
+                            <option value="g">g</option>
+                            <option value="un">un</option>
+                            <option value="ml">ml</option>
+                            <option value="L">L</option>
+                            <option value="caixa">caixa</option>
+                        </select>
                     </div>
 
                     <div className={styles.campo}>
@@ -130,7 +116,6 @@ export const AdminCadastroProduto = () => {
                             <th>Nome</th>
                             <th>Tipo</th>
                             <th>Unidade</th>
-                            <th>Est. mínimo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -140,7 +125,6 @@ export const AdminCadastroProduto = () => {
                                 <td>{p.nome}</td>
                                 <td>{p.tipo}</td>
                                 <td>{p.unidade}</td>
-                                <td>{p.estoqueMinimo} {p.unidade}</td>
                             </tr>
                         ))}
                     </tbody>

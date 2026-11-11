@@ -9,7 +9,6 @@ import {
     Hourglass,
     Package,
     PackagePlus,
-    TriangleAlert,
     type LucideIcon,
 } from "lucide-react";
 import styles from "./AdminDashboard.module.css";
@@ -37,7 +36,6 @@ interface IIndicador {
 const plural = (n: number, singular: string, pluralTexto: string) => `${n} ${n === 1 ? singular : pluralTexto}`;
 
 function montarIndicadores(r: IAdminResumoDashboard): IIndicador[] {
-    const nomesMinimo = r.abaixoMinimo.map(a => `${a.nome} (${a.disponivel}/${a.minimo} ${a.unidade})`).join(", ");
     return [
         {
             icone: Package, label: "Estoque disponível", cor: "teal", href: "/Admin/ConsultaEstoque",
@@ -55,12 +53,6 @@ function montarIndicadores(r: IAdminResumoDashboard): IIndicador[] {
             sub: r.lotesVencidosComSaldo > 0
                 ? `${plural(r.lotesVencidosComSaldo, "lote vencido", "lotes vencidos")} com saldo (${r.saldoVencido}) — descartar`
                 : "Nenhum lote vencido com saldo",
-        },
-        {
-            icone: TriangleAlert, label: "Abaixo do estoque mínimo", href: "/Admin/ConsultaEstoque",
-            cor: r.abaixoMinimo.length > 0 ? "vermelho" : "verde",
-            valor: plural(r.abaixoMinimo.length, "produto", "produtos"),
-            sub: r.abaixoMinimo.length > 0 ? nomesMinimo : "Todos acima do mínimo",
         },
         {
             icone: ClipboardList, label: "Retiradas pendentes", href: "/Admin/GerenciarAgendas",

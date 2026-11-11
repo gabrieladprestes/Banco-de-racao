@@ -5,5 +5,4 @@ export interface IAdminProduto {
     tipo: string;
     unidade: string;
     descricao: string;
-    estoqueMinimo: number;
 }

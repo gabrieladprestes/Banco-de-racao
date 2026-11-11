@@ -18,7 +18,6 @@ const lotesPorProduto: Record<string, IAdminEstoqueLote[]> = {
     ],
     VC001: [{ lote: "M001", loteFabricante: "VRM-8812", saldoEstoque: 60, saldoReservado: 0, validade: dataRelativa(150) }],
     VG001: [{ lote: "M002", loteFabricante: "VRM-9034", saldoEstoque: 40, saldoReservado: 0, validade: dataRelativa(25)  }],
-    // Antipulgas abaixo do estoque mínimo (8), para o alerta do Dashboard
     AP001: [{ lote: "M003", loteFabricante: "AP-55102", saldoEstoque: 6, saldoReservado: 0, validade: dataRelativa(10)  }],
     PC001: [{ lote: "P001", loteFabricante: "SN-2207",  saldoEstoque: 15, saldoReservado: 0,  validade: dataRelativa(90)  }],
     PG001: [{ lote: "P002",                             saldoEstoque: 12, saldoReservado: 0,  validade: dataRelativa(5)   }],

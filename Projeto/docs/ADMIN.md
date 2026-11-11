@@ -144,7 +144,7 @@ Rode `npm run dev` e abra `http://localhost:3000/Admin`. **Não aperte F5 no mei
 - [ ] Abrir uma tela de submenu e apertar F5: o grupo continua aberto.
 
 **Dashboard**
-- [ ] Cartões mostram estoque, validade, abaixo do mínimo (Antipulgas), pendentes e doações a receber.
+- [ ] Cartões mostram estoque, validade, pendentes e doações a receber.
 - [ ] A Agenda mostra atrasados (vermelho) e próximos 7 dias; "Abrir" leva à tela certa.
 
 **Retirada completa**
