@@ -167,11 +167,50 @@ Rode `npm run dev` e abra `http://localhost:3000/Admin`. **Não aperte F5 no mei
 
 ---
 
-## 4. Pendências
+## 4. Rodando com o banco (SQL Server)
+
+Algumas telas já buscam os dados no servidor (`Server`). As outras continuam nos mocks.
+
+| Tela | Fonte dos dados |
+|---|---|
+| Consulta de Donatários | **banco** (`GET /admin/donatarios`) |
+| Consulta de Doadores | **banco** (`GET /admin/doadores`) |
+| Demais telas | mocks (`services/mocks`) |
+
+**Passo a passo**
+1. No SQL Server, crie o banco com `Server/estrutura_banco/Script_banco_racao.sql`.
+2. Em `Server/database.js`, troque `server: 'NoteGab'` pelo nome do **seu** SQL Server.
+3. Suba o servidor: na pasta `Server`, rode `npm install` (só na primeira vez) e depois `npm run dev`. Deve aparecer `Servidor http://localhost:3010`.
+4. Na pasta `Projeto`, crie o arquivo **`.env.local`** com a linha:
+   ```
+   NEXT_PUBLIC_API_URL=http://localhost:3010
+   ```
+5. Rode o site (`npm run dev` na pasta `Projeto`). Se ele já estava rodando, pare e rode de novo: o `.env.local` só é lido ao iniciar.
+
+**Sem o `.env.local`**, todas as telas usam os mocks (útil para apresentar sem o banco).
+O `.env.local` não vai para o Git (está no `.gitignore`): cada pessoa cria o seu.
+
+**Como os dados do banco aparecem nas telas**
+- **Donatário** = pessoa física (`Fisico`) com CadÚnico preenchido; os pets vêm de `Animal`, ligados pelo CPF.
+- **Doador** = toda pessoa jurídica (`Juridico`) + quem já tem agendamento do tipo `Doacao`.
+- Espécie: `Canino` → Cachorro, `Felino` → Gato. Endereço: o banco só tem CEP.
+- No histórico do doador, "Qtd" é o número de **unidades/sacos** do produto (como o banco guarda), não kg.
+
+**Se der erro**, a tela mostra a mensagem no lugar da lista:
+- "Não foi possível conectar ao servidor": o servidor da pasta `Server` não está rodando ou o endereço do `.env.local` está errado.
+- "Não foi possível carregar os donatários/doadores": o servidor está rodando, mas não conseguiu falar com o banco (veja o terminal do servidor: nome do SQL Server, banco criado, driver ODBC 17).
+
+---
+
+## 5. Pendências
 
 **Fora do Admin**
 - A rota `/` está duplicada: `app/page.tsx` e `app/(public)/page.tsx`. O `next build` falha por isso — decidir com o grupo qual fica.
 - TypeScript, ESLint e `next build` do projeto inteiro: ainda não conferidos (a decidir com o grupo).
+
+**Integração com o banco**
+- Ainda nos mocks: Atendimento, Estoque, Receber/Saída, Gerenciar Agendas, Calendário, Histórico e Dashboard. Dependem de status, itens e motivo nos agendamentos, que o banco ainda não tem.
+- O Atendimento ainda busca donatários nos mocks: com o banco ligado, os nomes podem ser diferentes dos da Consulta de Donatários.
 
 **No Admin (ainda não existe)**
 - Relatórios de Estoque, Cadastro de Donatário e Cadastro de Doador (aparecem desabilitados no menu).
