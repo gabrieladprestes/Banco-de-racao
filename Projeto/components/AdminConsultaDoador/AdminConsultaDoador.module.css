@@ -174,3 +174,10 @@
 }
 
 .btnFecharFooter:hover { background: #c8c8c8; }
+
+/* Servidor fora do ar ou erro no banco */
+.erroCarregar {
+    text-align: center;
+    color: #b42318;
+    background: #fdecea;
+}

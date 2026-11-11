@@ -11,8 +11,14 @@ export function AdminConsultaDoador() {
     const [selecionado, setSelecionado] = useState<IAdminDoador | null>(null);
     const [doadores, setDoadores] = useState<IAdminDoador[]>([]);
 
+    const [carregando, setCarregando] = useState(true);
+    const [erro, setErro] = useState("");
+
     useEffect(() => {
-        listarDoadores().then(setDoadores);
+        listarDoadores()
+            .then(setDoadores)
+            .catch((e: Error) => setErro(e.message))
+            .finally(() => setCarregando(false));
     }, []);
 
     // Nome, ou CPF/CNPJ com ou sem pontuação
@@ -54,8 +60,8 @@ export function AdminConsultaDoador() {
                     ))}
                     {lista.length === 0 && (
                         <tr>
-                            <td colSpan={3} className={styles.semResultados}>
-                                Nenhum doador encontrado.
+                            <td colSpan={3} className={erro ? styles.erroCarregar : styles.semResultados}>
+                                {carregando ? "Carregando…" : erro || "Nenhum doador encontrado."}
                             </td>
                         </tr>
                     )}
