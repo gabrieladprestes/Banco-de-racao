@@ -10,8 +10,14 @@ export function AdminConsultaDonatario() {
     const [selecionado, setSelecionado] = useState<IAdminDonatario | null>(null);
     const [donatarios, setDonatarios] = useState<IAdminDonatario[]>([]);
 
+    const [carregando, setCarregando] = useState(true);
+    const [erro, setErro] = useState("");
+
     useEffect(() => {
-        listarDonatarios().then(setDonatarios);
+        listarDonatarios()
+            .then(setDonatarios)
+            .catch((e: Error) => setErro(e.message))
+            .finally(() => setCarregando(false));
     }, []);
 
     // Nome, ou CPF com ou sem pontuação
@@ -53,8 +59,8 @@ export function AdminConsultaDonatario() {
                     ))}
                     {lista.length === 0 && (
                         <tr>
-                            <td colSpan={3} className={styles.semResultados}>
-                                Nenhum donatário encontrado.
+                            <td colSpan={3} className={erro ? styles.erroCarregar : styles.semResultados}>
+                                {carregando ? "Carregando…" : erro || "Nenhum donatário encontrado."}
                             </td>
                         </tr>
                     )}
