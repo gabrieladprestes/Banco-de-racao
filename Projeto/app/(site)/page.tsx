@@ -9,7 +9,7 @@ export default function Home() {
     const Cards: IHomeCard[] = [
         {  
             id: 1,
-            image: "https://www.pedigree.com.br/sites/g/files/fnmzdf2401/files/2024-06/desenvolvimento-dos-filhotes-pedigree-04.jpg",
+            image: "https://imgs.search.brave.com/oKX0gLpSjqbJJWK6ZRiF1GxYnqknj8dNKwi5mPZRZuk/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9ibG9n/LXN0YXRpYy5wZXRs/b3ZlLmNvbS5ici93/cC1jb250ZW50L3Vw/bG9hZHMvMjAyMS8w/Ny9GaWxob3RlLWxh/YnJhZG9yLTUuanBn",
             title: "Cão Filhote",
             link: "../CatalagoRacao",
             alt: "Cachorro Filhote",

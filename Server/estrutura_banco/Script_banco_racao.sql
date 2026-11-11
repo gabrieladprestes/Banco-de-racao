@@ -88,11 +88,11 @@ CREATE TABLE Agendamento(
 
 INSERT INTO Agendamento (Data_agendada, Tipo, Id_usuario)
 VALUES
-('2026-01-28', 'Retirada', 2),
-('2026-03-15', 'Doacao', 7),
-('2026-03-18', 'Retirada', 1),
-('2026-04-02', 'Retirada', 1),
-('2026-04-23', 'Doacao', 7);
+('2026-11-28', 'Retirada', 2),
+('2026-11-15', 'Doacao', 7),
+('2026-11-18', 'Retirada', 1),
+('2026-11-02', 'Retirada', 1),
+('2026-11-23', 'Doacao', 7);
 
 CREATE TABLE Movimentacao(
 	Id_movimentacao INT IDENTITY(1,1) PRIMARY KEY,
@@ -138,8 +138,8 @@ CREATE TABLE Lote_produto(
 INSERT INTO Lote_produto (Lote, Quantidade, Validade, Id_produto)
 VALUES 
 ('26BR0241', 2, '2026-11-25', 2),
-('26BR0184', 3, '2026-06-11', 3),
-('L.11-0126B', 1, '2026-03-02', 5),
+('26BR0184', 3, '2026-12-11', 3),
+('L.11-0126B', 1, '2027-03-02', 5),
 ('LT: 015/26 11:20', 5, '2026-05-12', 4),
 ('l.52-0326A', 10, '2026-08-04', 2);
 
@@ -159,3 +159,13 @@ VALUES
 (5, 3, 1),
 (3, 1, 4),
 (4, 2, 4);
+
+CREATE TABLE Foto(
+	Id_foto INT IDENTITY(1,1) PRIMARY KEY,
+	Id_animal INT NOT NULL,
+	Url_foto VARCHAR(255) NOT NULL,
+	Principal BIT NOT NULL,
+	Data_cadastro DATETIME NOT NULL,
+
+	CONSTRAINT FK_IdAnimal_Foto FOREIGN KEY (Id_animal) REFERENCES Animal(Id_animal)
+)

@@ -27,28 +27,18 @@ const storage = multer.diskStorage({
     },
 
     filename: function (req, file, cb) {
+
         const extensao = path.extname(file.originalname);
 
         const nomeArquivo =
             `${Date.now()}-${Math.round(Math.random() * 1E9)}${extensao}`;
+
         cb(null, nomeArquivo);
     }
 });
 
 const upload = multer({
     storage: storage
-})
-
-app.use("/img", express.static(pastaUploads));
-
-app.get('/qtd', async (req, resp) => {
-    try {
-        const cn = await conectar();
-        const qtd = await cn.request().query("SELECT COUNT(*) as total FROM Animal");
-        resp.json({ "qtd": qtd.recordset[0].total });
-    } catch (error) {
-        resp.json({ "tipo de erro ": error })
-    }
 })
 
 app.get('/retirada', async (req, resp) => {
@@ -142,6 +132,91 @@ app.post('/agendarRetirada', async (req, resp) => {
     } catch (e) {
         console.error("Erro ao realizar agendamento: ", e.message)
         resp.status(500).json({ error: e.message })
+    }
+})
+
+app.post('/cadastrarPet', upload.single("foto"), async (req, res) => {
+    try {
+        const {
+            nome,
+            idade,
+            porte,
+            especie,
+            sexo,
+            castrado,
+            microchipado
+        } = req.body;
+
+        const cn = await conectar();
+
+        const result = await cn
+        .request()
+        .input('nome', sql.VarChar(50), nome)
+        .input('idade', sql.VarChar(7), idade)
+        .input('porte', sql.VarChar(10), porte)
+        .input('especie', sql.VarChar(10), especie)
+        .input('sexo', sql.Char(1), sexo)
+        .input('castrado', sql.Bit, castrado)
+        .input('microchip', sql.VarChar(19), microchipado)
+        .query(`
+            INSERT INTO Animal
+            (
+                Nome,
+                Idade,
+                Porte,
+                Especie,
+                Sexo,
+                Castrado,
+                Microchip,
+                CPF
+            )
+            OUTPUT INSERTED.*
+            VALUES
+            (
+                @nome,
+                @idade,
+                @porte,
+                @especie,
+                @sexo,
+                @castrado,
+                @microchip,
+                '617.517.719-38'
+            )
+        `)
+        
+        const idAnimal = result.recordset[0].Id_animal
+
+        if (req.file) {
+            const caminhoFoto = `/img/${req.file.filename}`
+
+            await cn
+            .request()
+            .input("id_animal", sql.Int, idAnimal)
+            .input("url_foto", sql.VarChar(255), caminhoFoto)
+            .query(`
+                INSERT INTO Foto
+                (
+                    Id_animal,
+                    Url_foto,
+                    Principal,
+                    Data_cadastro
+                )
+                VALUES
+                (
+                    @id_animal,
+                    @url_foto,
+                    1,
+                    GETDATE()
+                )
+            `)
+        }
+
+        res.status(201).json({
+            mensagem: 'Animal cadastrado com sucesso!',
+        })
+    } catch (error) {
+        console.error("Erro ao cadastrar pet: ", error);
+        res.status(500).json({ erro: error.message })
     }
 })
 
