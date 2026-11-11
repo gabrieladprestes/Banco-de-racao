@@ -9,8 +9,10 @@ import { buscarDoacoesAgendadas, buscarHistoricoDoacoes } from "../../services/d
 import { formatarData, getTodayDate } from "../../utils/dateUtils";
 import { somenteDigitos } from "../../utils/textoUtils";
 import { AdminModalRecebimento } from "../AdminModalRecebimento/AdminModalRecebimento";
+import { PackagePlus } from "lucide-react";
 
-// Aba Doação do Atendimento: o doador chega no balcão para entregar uma doação.
+// Aba Doação do Atendimento: o doador chega no balcão para entregar uma doação,
+// agendada ou não (botão "Receber doação sem agendamento").
 //
 // Uma busca só (nome, CPF/CNPJ ou código do agendamento) filtra a tabela de doações.
 // Se a busca chegar a um doador só, o card dele aparece acima da tabela.
@@ -45,6 +47,8 @@ export function AbaDoacao() {
     const [recebidas, setRecebidas] = useState<IAdminHistoricoDoacao[]>([]);
 
     const [recebimento, setRecebimento] = useState<IAdminDoacaoAgendada | null>(null);
+    // Doação sem agendamento: aberta pelo botão (com o doador do card, se houver)
+    const [semAgendamento, setSemAgendamento] = useState<{ doador?: IAdminDoadorCadastro } | null>(null);
     const [mensagem, setMensagem] = useState("");
 
     function carregarDoacoes() {
@@ -98,6 +102,7 @@ export function AbaDoacao() {
 
     function recebimentoConcluido(texto: string) {
         setRecebimento(null);
+        setSemAgendamento(null);
         setMensagem(texto);
         setTimeout(() => setMensagem(""), 6000);
         carregarDoacoes();
@@ -132,6 +137,9 @@ export function AbaDoacao() {
                 </div>
                 <button type="button" className={styles.btnBuscar} onClick={pesquisar}>Buscar</button>
                 {temFiltro && <button type="button" className={styles.btnLimpar} onClick={limpar}>Limpar</button>}
+                <button type="button" className={styles.btnSemAgendamento} onClick={() => setSemAgendamento({ doador: selecionado ?? undefined })}>
+                    <PackagePlus size={16} aria-hidden /> Receber doação sem agendamento
+                </button>
             </div>
 
             {encontrados.length > 1 && (
@@ -171,7 +179,10 @@ export function AbaDoacao() {
                                 {recebidas.map(r => (
                                     <tr key={r.id}>
                                         <td>{formatarData(r.dataRecebimento)}</td>
-                                        <td>{r.codigoAgendamento}</td>
+                                        <td>
+                                            {r.codigoAgendamento}
+                                            {r.semAgendamento && <span className={styles.tagSemAgendamento}>Sem agendamento</span>}
+                                        </td>
                                         <td>{r.itens.map(i => `${i.nome} (${i.quantidade})`).join(", ")}</td>
                                     </tr>
                                 ))}
@@ -233,6 +244,14 @@ export function AbaDoacao() {
                     key={recebimento.id}
                     doacao={recebimento}
                     onFechar={() => setRecebimento(null)}
+                    onConcluido={recebimentoConcluido}
+                />
+            )}
+
+            {semAgendamento && (
+                <AdminModalRecebimento
+                    doadorInicial={semAgendamento.doador}
+                    onFechar={() => setSemAgendamento(null)}
                     onConcluido={recebimentoConcluido}
                 />
             )}

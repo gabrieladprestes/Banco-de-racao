@@ -176,8 +176,14 @@ export const AdminHistoricoRetiradas = () => {
                         <tbody>
                             {resultadoD.map(d => (
                                 <tr key={d.id}>
-                                    <td>{d.codigoAgendamento}</td>
-                                    <td>{d.doador}</td>
+                                    <td>
+                                        {d.codigoAgendamento}
+                                        {d.semAgendamento && <span className={styles.tagSemAgendamento}>Sem agendamento</span>}
+                                    </td>
+                                    <td>
+                                        {d.doador}
+                                        {d.doadorNaoCadastrado && <span className={styles.tagNaoCadastrado}>Não cadastrado</span>}
+                                    </td>
                                     <td>{d.cpfCnpj}</td>
                                     <td className={styles.tdItens}>{resumoItens(d.itens)}</td>
                                     <td>{formatarData(d.dataRecebimento)}</td>
@@ -251,6 +257,8 @@ export const AdminHistoricoRetiradas = () => {
                         <div className={styles.modalHeader}>
                             <div>
                                 <span className={styles.modalCodigo}>{doacaoSelecionada.codigoAgendamento}</span>
+                                {doacaoSelecionada.semAgendamento && <span className={styles.tagSemAgendamento}>Sem agendamento</span>}
+                                {doacaoSelecionada.doadorNaoCadastrado && <span className={styles.tagNaoCadastrado}>Não cadastrado</span>}
                                 <h2>{doacaoSelecionada.doador}</h2>
                             </div>
                             <button type="button" className={styles.btnFechar} onClick={() => setDoacaoSelecionada(null)} aria-label="Fechar"><X size={20} /></button>

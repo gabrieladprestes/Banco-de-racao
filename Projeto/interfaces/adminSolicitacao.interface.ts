@@ -19,12 +19,22 @@ export interface IAdminSolicitacaoRetirada {
     observacao?: string;
 }
 
+// Doador que doou no balcão sem ter cadastro: o funcionário anota nome e documento
+export interface IAdminDoadorNaoCadastrado {
+    nome: string;
+    documento: string;   // CPF ou CNPJ
+    telefone?: string;
+}
+
 // Proposta de doação feita pelo doador.
 // pendente -> aprovado (aparece no Calendário e em Receber Doação) -> recebido (vai para o Histórico)
+// Doação sem agendamento (no balcão) já nasce como recebido, com a data do dia.
 export interface IAdminSolicitacaoDoacao {
     id: number;
     codigoAgendamento: string;
-    doadorId: number;
+    doadorId?: number;                              // doador cadastrado
+    doadorNaoCadastrado?: IAdminDoadorNaoCadastrado; // ou os dados anotados no balcão
+    semAgendamento?: boolean;
     codigoProduto: string;
     quantidade: number;
     dataProposta: string;

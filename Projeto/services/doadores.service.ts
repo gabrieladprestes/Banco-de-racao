@@ -76,3 +76,8 @@ export async function buscarDoadores(termo: string): Promise<IAdminDoadorCadastr
         (documento.length > 0 && somenteDigitos(d.cpfCnpj).includes(documento))
     );
 }
+
+// Atendimento: doadores cadastrados para escolher na doação sem agendamento (mocks)
+export async function listarDoadoresCadastro(): Promise<IAdminDoadorCadastro[]> {
+    return structuredClone(mockDoadores);
+}

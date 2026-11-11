@@ -270,3 +270,72 @@
     .itemGrade > :first-child { grid-column: 1 / -1; }
     .itemGrade > :last-child { justify-self: start; }
 }
+
+/* Doação sem agendamento */
+.avisoSemAgendamento {
+    background: #e6f4f4;
+    color: #2a6f6f;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+.tipoDoador {
+    display: flex;
+    gap: 8px;
+}
+
+.tipoDoadorOpcao {
+    flex: 1;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.88rem;
+    color: #555;
+    cursor: pointer;
+}
+
+.tipoDoadorAtivo {
+    border-color: #348888;
+    background: #e6f4f4;
+    color: #348888;
+    font-weight: 600;
+}
+
+.doadorCampos {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.doadorGrade {
+    display: grid;
+    grid-template-columns: 2fr 1.4fr 1fr;
+    gap: 8px;
+}
+
+.doadorGrade label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.doadorGrade input {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.88rem;
+}
+
+.btnConfirmar:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+    .doadorGrade { grid-template-columns: 1fr; }
+}

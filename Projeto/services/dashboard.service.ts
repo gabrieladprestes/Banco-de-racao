@@ -3,7 +3,7 @@ import { mockProdutos, produtoPorCodigo } from "./mocks/produtos.mock";
 import { mockSolicitacoesRetirada } from "./mocks/retiradas.mock";
 import { mockSolicitacoesDoacao } from "./mocks/doacoes.mock";
 import { donatarioPorId } from "./mocks/donatarios.mock";
-import { doadorPorId } from "./mocks/doadores.mock";
+import { dadosDoador } from "./doacoes.service";
 import { disponivelProduto } from "./estoque.service";
 import { dataRelativa, getTodayDate } from "../utils/dateUtils";
 import { statusValidade } from "../utils/estoqueUtils";
@@ -75,7 +75,7 @@ export async function buscarResumoDashboard(): Promise<IAdminResumoDashboard> {
             data: s.dataProposta,
             tipo: "Doação",
             codigo: s.codigoAgendamento,
-            nome: doadorPorId(s.doadorId).nome,
+            nome: dadosDoador(s).nome,
             itens: `${nomeProduto(s.codigoProduto)} (${s.quantidade})`,
             href: "/Admin/ReceberDoacao",
             atrasado: s.dataProposta < hoje,

@@ -4,16 +4,20 @@ import styles from "./AdminModalRecebimento.module.css";
 import { IAdminDoacaoAgendada } from "../../interfaces/adminDoacaoAgendada.interface";
 import { IAdminProduto } from "../../interfaces/adminProduto.interface";
 import { IAdminEstoque } from "../../interfaces/adminEstoque.interface";
-import { confirmarRecebimento, recusarRecebimento } from "../../services/doacoes.service";
+import { IAdminDoadorCadastro } from "../../interfaces/adminSolicitacao.interface";
+import { confirmarRecebimento, recusarRecebimento, registrarDoacaoSemAgendamento } from "../../services/doacoes.service";
+import { listarDoadoresCadastro } from "../../services/doadores.service";
 import { buscarProdutos } from "../../services/produtos.service";
 import { buscarEstoque } from "../../services/estoque.service";
-import { formatarData } from "../../utils/dateUtils";
+import { formatarData, getTodayDate } from "../../utils/dateUtils";
 import { loteCorrespondente, statusValidade } from "../../utils/estoqueUtils";
 import { AdminCampoBusca, IOpcaoBusca } from "../AdminCampoBusca/AdminCampoBusca";
 import { X } from "lucide-react";
 
-// Modal de recebimento de uma doação agendada.
-// Usado na lista de doações para receber e no card do doador (Atendimento).
+// Modal de recebimento de doação (Atendimento, aba Doação).
+// Com `doacao`: recebe uma doação agendada (pode confirmar ou recusar).
+// Sem `doacao`: doação sem agendamento — o funcionário informa o doador
+// (cadastrado ou não) e os itens; o agendamento é criado na hora, já como recebido.
 
 // Linha editável do modal: o item agendado vem preenchido, os extras são adicionados pelo funcionário
 interface IItemRecebimento {
@@ -26,29 +30,47 @@ interface IItemRecebimento {
 }
 
 interface Props {
-    doacao: IAdminDoacaoAgendada;
+    doacao?: IAdminDoacaoAgendada;
+    // Sem agendamento: doador já escolhido no Atendimento (opcional)
+    doadorInicial?: IAdminDoadorCadastro;
     onFechar: () => void;
     // Chamado depois de confirmar ou recusar, com o texto do aviso para a tela
     onConcluido: (mensagem: string) => void;
 }
 
-export function AdminModalRecebimento({ doacao, onFechar, onConcluido }: Props) {
+export function AdminModalRecebimento({ doacao, doadorInicial, onFechar, onConcluido }: Props) {
+    const semAgendamento = !doacao;
     const [produtos, setProdutos] = useState<IAdminProduto[]>([]);
     const [estoque, setEstoque] = useState<IAdminEstoque[]>([]);
     const [itens, setItens] = useState<IItemRecebimento[]>([
-        { chave: 1, codigoProduto: doacao.codigoProduto, loteFabricante: "", validade: "", quantidade: doacao.quantidade, agendado: true },
+        doacao
+            ? { chave: 1, codigoProduto: doacao.codigoProduto, loteFabricante: "", validade: "", quantidade: doacao.quantidade, agendado: true }
+            : { chave: 1, codigoProduto: "", loteFabricante: "", validade: "", quantidade: 1, agendado: false },
     ]);
     const [observacao, setObservacao] = useState("");
     const [erro, setErro] = useState("");
+    const [salvando, setSalvando] = useState(false);
+
+    // Doador da doação sem agendamento
+    const [doadores, setDoadores] = useState<IAdminDoadorCadastro[]>([]);
+    const [cadastrado, setCadastrado] = useState(true);
+    const [doadorId, setDoadorId] = useState(doadorInicial ? String(doadorInicial.id) : "");
+    const [nome, setNome] = useState("");
+    const [documento, setDocumento] = useState("");
+    const [telefone, setTelefone] = useState("");
 
     useEffect(() => {
         buscarProdutos().then(setProdutos);
         buscarEstoque().then(setEstoque);
-    }, []);
+        if (semAgendamento) listarDoadoresCadastro().then(setDoadores);
+    }, [semAgendamento]);
+
+    const doadorEscolhido = doadores.find(d => String(d.id) === doadorId);
+    const opcoesDoador: IOpcaoBusca[] = doadores.map(d => ({ valor: String(d.id), rotulo: d.nome, detalhe: d.cpfCnpj }));
 
     function adicionarItem() {
         const chave = Math.max(0, ...itens.map(i => i.chave)) + 1;
-        setItens([...itens, { chave, codigoProduto: produtos[0]?.codigo ?? "", loteFabricante: "", validade: "", quantidade: 1, agendado: false }]);
+        setItens([...itens, { chave, codigoProduto: "", loteFabricante: "", validade: "", quantidade: 1, agendado: false }]);
     }
 
     function alterarItem(chave: number, campos: Partial<IItemRecebimento>) {
@@ -93,17 +115,33 @@ export function AdminModalRecebimento({ doacao, onFechar, onConcluido }: Props) 
         return "Novo lote interno será gerado ao confirmar";
     }
 
+    const textoLotes = (usados: { nome: string; lote: string; novo: boolean }[]) =>
+        usados.map(u => `${u.nome}: ${u.lote}${u.novo ? " (novo)" : ""}`).join(" · ");
+
     async function confirmar() {
+        setErro("");
+        setSalvando(true);
         try {
-            const usados = await confirmarRecebimento(doacao.id, itens, observacao);
-            const lotes = usados.map(u => `${u.nome}: ${u.lote}${u.novo ? " (novo)" : ""}`).join(" · ");
-            onConcluido(`Recebimento ${doacao.codigoAgendamento} confirmado. Lotes internos — ${lotes}`);
+            if (doacao) {
+                const usados = await confirmarRecebimento(doacao.id, itens, observacao);
+                onConcluido(`Recebimento ${doacao.codigoAgendamento} confirmado. Lotes internos — ${textoLotes(usados)}`);
+            } else {
+                if (cadastrado && !doadorId) throw new Error("Escolha o doador cadastrado ou marque \"Doador não cadastrado\".");
+                const doador = cadastrado
+                    ? { doadorId: Number(doadorId) }
+                    : { naoCadastrado: { nome, documento, telefone } };
+                const r = await registrarDoacaoSemAgendamento(doador, itens, observacao);
+                onConcluido(`Doação ${r.codigoAgendamento} registrada (sem agendamento). Lotes internos — ${textoLotes(r.lotes)}`);
+            }
         } catch (e) {
             setErro((e as Error).message);
+        } finally {
+            setSalvando(false);
         }
     }
 
     async function recusar() {
+        if (!doacao) return;
         try {
             await recusarRecebimento(doacao.id, observacao);
             onConcluido(`Recebimento ${doacao.codigoAgendamento} recusado.`);
@@ -116,31 +154,96 @@ export function AdminModalRecebimento({ doacao, onFechar, onConcluido }: Props) 
         <div className={styles.backdrop} onClick={onFechar}>
             <div className={styles.modal} onClick={e => e.stopPropagation()}>
                 <div className={styles.modalHeader}>
-                    <h2>Detalhes da Doação</h2>
+                    <h2>{doacao ? "Detalhes da Doação" : "Doação sem agendamento"}</h2>
                     <button type="button" className={styles.btnFechar} onClick={onFechar} aria-label="Fechar"><X size={20} /></button>
                 </div>
 
                 <div className={styles.modalBody}>
-                    <div className={styles.campo}>
-                        <span>Cód. Agendamento</span>
-                        <span>{doacao.codigoAgendamento}</span>
-                    </div>
-                    <div className={styles.campo}>
-                        <span>Doador</span>
-                        <span>{doacao.nomeDoador}</span>
-                    </div>
-                    <div className={styles.campo}>
-                        <span>CPF / CNPJ</span>
-                        <span>{doacao.cpfCnpj}</span>
-                    </div>
-                    <div className={styles.campo}>
-                        <span>Telefone</span>
-                        <span>{doacao.telefone}</span>
-                    </div>
-                    <div className={styles.campo}>
-                        <span>Data agendada</span>
-                        <span>{formatarData(doacao.dataAgendada)}</span>
-                    </div>
+                    {doacao ? (
+                        <>
+                        <div className={styles.campo}>
+                            <span>Cód. Agendamento</span>
+                            <span>{doacao.codigoAgendamento}</span>
+                        </div>
+                        <div className={styles.campo}>
+                            <span>Doador</span>
+                            <span>{doacao.nomeDoador}</span>
+                        </div>
+                        <div className={styles.campo}>
+                            <span>CPF / CNPJ</span>
+                            <span>{doacao.cpfCnpj}</span>
+                        </div>
+                        <div className={styles.campo}>
+                            <span>Telefone</span>
+                            <span>{doacao.telefone}</span>
+                        </div>
+                        <div className={styles.campo}>
+                            <span>Data agendada</span>
+                            <span>{formatarData(doacao.dataAgendada)}</span>
+                        </div>
+                        </>
+                    ) : (
+                        <>
+                            <p className={styles.avisoSemAgendamento}>
+                                Registrada com a data de hoje ({formatarData(getTodayDate())}) e um código de agendamento novo.
+                            </p>
+
+                            <p className={styles.itensLabel}>Doador</p>
+                            <div className={styles.tipoDoador} role="radiogroup" aria-label="Tipo de doador">
+                                <button
+                                    type="button"
+                                    role="radio"
+                                    aria-checked={cadastrado}
+                                    className={`${styles.tipoDoadorOpcao} ${cadastrado ? styles.tipoDoadorAtivo : ""}`}
+                                    onClick={() => { setCadastrado(true); setErro(""); }}
+                                >
+                                    Doador cadastrado
+                                </button>
+                                <button
+                                    type="button"
+                                    role="radio"
+                                    aria-checked={!cadastrado}
+                                    className={`${styles.tipoDoadorOpcao} ${!cadastrado ? styles.tipoDoadorAtivo : ""}`}
+                                    onClick={() => { setCadastrado(false); setErro(""); }}
+                                >
+                                    Doador não cadastrado
+                                </button>
+                            </div>
+
+                            {cadastrado ? (
+                                <div className={styles.doadorCampos}>
+                                    <AdminCampoBusca
+                                        ariaLabel="Doador cadastrado"
+                                        placeholder="Busque pelo nome ou CPF/CNPJ"
+                                        value={doadorId}
+                                        opcoes={opcoesDoador}
+                                        onChange={valor => { setDoadorId(valor); setErro(""); }}
+                                        vazio="Nenhum doador encontrado"
+                                    />
+                                    {doadorEscolhido && (
+                                        <span className={styles.previaLote}>
+                                            {doadorEscolhido.cpfCnpj} · {doadorEscolhido.telefone}
+                                        </span>
+                                    )}
+                                </div>
+                            ) : (
+                                <div className={styles.doadorGrade}>
+                                    <label>
+                                        Nome *
+                                        <input value={nome} onChange={e => { setNome(e.target.value); setErro(""); }} placeholder="Nome de quem está doando" />
+                                    </label>
+                                    <label>
+                                        CPF ou CNPJ *
+                                        <input value={documento} onChange={e => { setDocumento(e.target.value); setErro(""); }} placeholder="Só números ou com pontuação" />
+                                    </label>
+                                    <label>
+                                        Telefone
+                                        <input value={telefone} onChange={e => setTelefone(e.target.value)} placeholder="Opcional" />
+                                    </label>
+                                </div>
+                            )}
+                        </>
+                    )}
 
                     <p className={styles.itensLabel}>Itens do recebimento</p>
 
@@ -156,7 +259,7 @@ export function AdminModalRecebimento({ doacao, onFechar, onConcluido }: Props) 
                         <div key={item.chave} className={styles.itemBloco}>
                             <div className={styles.itemGrade}>
                                 {item.agendado ? (
-                                    <span className={styles.itemNome}>{produto(item.codigoProduto)?.nome ?? doacao.item}</span>
+                                    <span className={styles.itemNome}>{produto(item.codigoProduto)?.nome ?? doacao?.item}</span>
                                 ) : (
                                     <select
                                         aria-label="Produto"
@@ -164,6 +267,7 @@ export function AdminModalRecebimento({ doacao, onFechar, onConcluido }: Props) 
                                         value={item.codigoProduto}
                                         onChange={e => alterarItem(item.chave, { codigoProduto: e.target.value, loteFabricante: "", validade: "" })}
                                     >
+                                        <option value="">Selecione o produto</option>
                                         {produtos.map(p => (
                                             <option key={p.codigo} value={p.codigo}>{p.nome}</option>
                                         ))}
@@ -217,7 +321,7 @@ export function AdminModalRecebimento({ doacao, onFechar, onConcluido }: Props) 
                         <label className={styles.obsLabel}>Observações</label>
                         <textarea
                             className={styles.obsTextarea}
-                            placeholder="Observações sobre o recebimento (obrigatório para recusar)..."
+                            placeholder={doacao ? "Observações sobre o recebimento (obrigatório para recusar)..." : "Observações sobre a doação (opcional)..."}
                             value={observacao}
                             onChange={e => setObservacao(e.target.value)}
                         />
@@ -228,8 +332,10 @@ export function AdminModalRecebimento({ doacao, onFechar, onConcluido }: Props) 
 
                 <div className={styles.modalFooter}>
                     <button type="button" className={styles.btnFecharFooter} onClick={onFechar}>Fechar</button>
-                    <button type="button" className={styles.btnRecusar} onClick={recusar}>Recusar Recebimento</button>
-                    <button type="button" className={styles.btnConfirmar} onClick={confirmar}>Confirmar Recebimento</button>
+                    {doacao && <button type="button" className={styles.btnRecusar} onClick={recusar}>Recusar Recebimento</button>}
+                    <button type="button" className={styles.btnConfirmar} onClick={confirmar} disabled={salvando}>
+                        {salvando ? "Registrando…" : "Confirmar Recebimento"}
+                    </button>
                 </div>
             </div>
         </div>
